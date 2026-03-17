@@ -5,7 +5,7 @@ services:
       - ./src:/app:cached
       - ./docker/vhost.conf:/etc/apache2/sites-available/000-default.conf
     ports:
-      - 8080:80
+      - "1313:80"
   db:
     image: mysql:9.1
     volumes:
