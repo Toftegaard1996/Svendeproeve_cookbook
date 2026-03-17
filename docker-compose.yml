@@ -1,0 +1,33 @@
+services:
+  web:
+    image: laravel:latest
+    volumes:
+      - ./src:/app:cached
+      - ./docker/vhost.conf:/etc/apache2/sites-available/000-default.conf
+    ports:
+      - 8080:80
+  db:
+    image: mysql:9.1
+    volumes:
+      - cookBook:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: app
+  db-test:
+    image: mysql:8.0
+    volumes:
+      - cookBook-test:/var/lib/mysql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: testing
+      MYSQL_DATABASE: testing
+  redis:
+    image: redis:5.0.5-alpine
+    ports:
+      - 6379:6379
+volumes:
+  cookBook:
+  cookBook-test:
