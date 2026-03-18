@@ -4,23 +4,45 @@ import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
+import { Image } from 'lucide-vue-next';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Din kogebog',
         href: dashboard(),
     },
 ];
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Din kogebog" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div
             class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
         >
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div class="grid gap-4 md:grid-cols-5">
+                <div class="text-center border-4 border-green-900 rounded-lg p-2 shadow-md shadow-gray-400 dark:shadow-gray-800 dark">
+                    <div class="w-full mb-4">
+                        <Image class="mx-auto h-24 w-24"/>
+                    </div>
+                    <p>Opkrift titel</p>
+                    <p>Opkrift beksrivelse?</p>
+                    <div class="flex flex-row justify-between w-full mt-2">
+                        <p>Prep time</p>
+                    </div>
+                    <div class="grid gap-2 grid-cols-3 mt-4">
+                        <div class="border border-gray-400 text-sm text-gray-300 rounded">
+                            Lunch
+                        </div>
+                        <div class="border border-gray-400 text-sm text-gray-300 rounded">
+                            Soup
+                        </div>
+                        <div class="border border-gray-400 text-sm text-gray-300 rounded">
+                            Forret
+                        </div>
+                    </div>
+                </div>
                 <div
                     class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
                 >
