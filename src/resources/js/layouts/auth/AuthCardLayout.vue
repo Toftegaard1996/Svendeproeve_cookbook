@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { ChefHat } from 'lucide-vue-next';
+import { ChefHat, UtensilsCrossed } from 'lucide-vue-next';
 import {
     Card,
     CardContent,
@@ -18,15 +18,18 @@ defineProps<{
 
 <template>
     <div
-        class="flex min-h-svh flex-col items-center justify-center gap-6 bg-[url(/img/background.png)] p-6 md:p-10"
+        class="flex min-h-svh flex-col items-center justify-center gap-6 bg-[url(/img/background2.png)] p-6 md:p-10"
     >
         <div class="flex w-full max-w-md flex-col gap-6">
 
             <div class="flex flex-col gap-6">
                 <Card class="rounded-xl">
-                    <ChefHat
-                        class="size-9 flex items-center self-center font-medium text-black dark:text-white"
-                    />
+                    <div class="flex flew-row justify-center">
+                        <ChefHat
+                            class="size-9"
+                        />
+                        <UtensilsCrossed class="size-9"/>
+                    </div>
                     <CardHeader class="px-10 text-center">
                         <CardTitle class="text-xl">{{ title }}</CardTitle>
                         <CardDescription>

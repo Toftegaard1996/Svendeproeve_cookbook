@@ -4,7 +4,7 @@ import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
-import { Image } from 'lucide-vue-next';
+import { Image, Clock } from 'lucide-vue-next';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -28,15 +28,18 @@ const breadcrumbs: BreadcrumbItem[] = [
                     </div>
                     <p>Opkrift titel</p>
                     <p>Opkrift beksrivelse?</p>
-                    <div class="flex flex-row justify-between w-full mt-2">
-                        <p>Prep time</p>
+                    <div class="flex flex-row justify-end w-full mt-2">
+                        <div class="flex flex-row">
+                            <Clock class="w-5"/>
+                            <p class="ml-2">Prep time</p>
+                        </div>
                     </div>
                     <div class="grid gap-2 grid-cols-3 mt-4">
                         <div class="border border-gray-400 text-sm text-gray-300 rounded">
-                            Lunch
+                            Frokost
                         </div>
                         <div class="border border-gray-400 text-sm text-gray-300 rounded">
-                            Soup
+                            Suppe
                         </div>
                         <div class="border border-gray-400 text-sm text-gray-300 rounded">
                             Forret
