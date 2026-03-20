@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('cook_time')->nullable();
             $table->integer('base_amount');
             $table->string('guide')->nullable();
+            $table->string('country')->nullable();
             $table->timestamps();
         });
     }
