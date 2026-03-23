@@ -12,7 +12,7 @@ class RecipesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,20 @@ class RecipesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'string',
+            'description' => 'string',
+            'cook_time' => 'integer',
+            'base_amount' => 'integer',
+            'guide' => 'string',
+            'country' => 'string',
+//            'ingredients' => 'array',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.string' => 'Navnet skal være ren tekst'
         ];
     }
 }

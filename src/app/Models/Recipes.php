@@ -18,6 +18,7 @@ class Recipes extends Model
         'cook_time',
         'base_amount',
         'guide',
+        'country',
     ];
 
     public function users(): BelongsToMany

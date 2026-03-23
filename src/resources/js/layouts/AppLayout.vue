@@ -13,6 +13,10 @@ withDefaults(defineProps<Props>(), {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <slot />
+        <div class="h-full bg-[url(/img/background2.webp)]">
+            <div class="h-full backdrop-blur-[3px]">
+                <slot />
+            </div>
+        </div>
     </AppLayout>
 </template>

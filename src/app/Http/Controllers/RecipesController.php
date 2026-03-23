@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Recipes;
 use App\Http\Requests\RecipesRequest;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class RecipesController extends Controller
 {
@@ -21,7 +22,7 @@ class RecipesController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('recipes/Create', []);
     }
 
     /**
@@ -29,7 +30,14 @@ class RecipesController extends Controller
      */
     public function store(RecipesRequest $request)
     {
-        //
+        Recipes::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'cook_time' => $request->input('cook_time'),
+            'base_amount' => $request->input('base_amount'),
+            'guide' => $request->input('guide'),
+            'country' => $request->input('country'),
+        ]);
     }
 
     /**

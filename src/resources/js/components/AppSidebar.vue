@@ -17,7 +17,7 @@ import {
 import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 import { index as category_index }  from "@/routes/categories";
-import { index as recipe_index } from "@/routes/recipes";
+import { create as recipe_create } from "@/routes/recipes";
 
 const mainNavItems: NavItem[] = [
     {
@@ -27,7 +27,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Tilføj opskrift',
-        href: recipe_index(),
+        href: recipe_create(),
         icon: Pencil,
     },
     {

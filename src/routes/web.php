@@ -12,7 +12,7 @@ Route::inertia('/', 'auth/Login', [
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'Dashboard')->name('dashboard');
     Route::resource('/recipes', RecipesController::class);
-    Route::resource('/categories', CategoriesController::class)->only(['index', 'show', 'destroy']);
+    Route::resource('/categories', CategoriesController::class)->only(['index', 'store', 'destroy']);
 });
 
 require __DIR__.'/settings.php';
