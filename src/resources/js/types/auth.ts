@@ -18,3 +18,8 @@ export type TwoFactorConfigContent = {
     description: string;
     buttonText: string;
 };
+
+export type Categories = {
+    id: number;
+    name: string;
+};

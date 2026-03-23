@@ -12,7 +12,7 @@ class StoreCategoriesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,15 @@ class StoreCategoriesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required, unique:categories,name',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Der skal udfyldes et navn til kategorien',
+            'name.unique' => 'Navnet på kategorien må ikke eksistere i forvejen',
         ];
     }
 }

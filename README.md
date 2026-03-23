@@ -21,10 +21,13 @@ Inden hjemmesiden kan tilgås, skal projektet bygges op i docker og npm.
 - Kør \<docker build -t laravel:latest -f Docker/Laravel.Dockerfile .\> (Glem ikke punktummet efter Dockerfile)
 - Kør \<docker compose up -d\>
 - Naviger til src mappen
-- Kør \<php artisan migrate –seed\> (Double dash)
+- Kør \<php artisan migrate –seed\> (Double dash) *
 - Kør \<npm run dev\>
 - Open ønskede browser og søg på localhost:1313
 - Opret egen bruger, eller log ind med:
   - test@example.com
   - secret
 
+## Fejlsøgning:
+- Hvis databasen ikke vil lade sig migrere, tjek da din host fil via stien c:\Windows\System32\Drivers\etc\hosts , og sikre at host.docker.internal er sat til 127.0.0.1 (notepad skal åbnes som administrator)
+  - Søg eventuelt efter: "Added by Docker Desktop"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { LayoutGrid, Pencil, BookOpenText } from 'lucide-vue-next';
+import { LayoutGrid, Pencil, BookOpenText, List } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -16,6 +16,8 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
+import { index as category_index }  from "@/routes/categories";
+import { index as recipe_index } from "@/routes/recipes";
 
 const mainNavItems: NavItem[] = [
     {
@@ -25,18 +27,23 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Tilføj opskrift',
-        href: '',
+        href: recipe_index(),
         icon: Pencil,
     },
     {
         title: 'Tilføj kategori',
-        href: '',
+        href: category_index(),
         icon: Pencil,
     },
     {
         title: 'Se alle opskrifter',
         href: '',
         icon: LayoutGrid,
+    },
+    {
+        title: 'Register',
+        href: '',
+        icon: List,
     },
 ];
 

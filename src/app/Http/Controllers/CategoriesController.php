@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Categories;
 use App\Http\Requests\StoreCategoriesRequest;
 use App\Http\Requests\UpdateCategoriesRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class CategoriesController extends Controller
 {
@@ -13,7 +15,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('categories/Index', [
+            'categories' => Categories::all(),
+        ]);
     }
 
     /**
@@ -29,7 +33,11 @@ class CategoriesController extends Controller
      */
     public function store(StoreCategoriesRequest $request)
     {
-        //
+        Categories::create([
+            'name' => $request->input('name'),
+        ]);
+
+        return Redirect::route('categories.index');
     }
 
     /**

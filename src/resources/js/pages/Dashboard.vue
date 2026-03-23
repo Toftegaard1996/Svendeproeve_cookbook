@@ -22,7 +22,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
         >
             <div class="grid gap-4 md:grid-cols-5">
-                <div class="text-center border-4 border-green-900 rounded-lg p-2 shadow-md shadow-gray-400 dark:shadow-gray-800 dark">
+                <div class="text-center border-4 border-green-900 rounded-lg p-2 shadow-md">
                     <div class="w-full mb-4">
                         <Image class="mx-auto h-24 w-24"/>
                     </div>
