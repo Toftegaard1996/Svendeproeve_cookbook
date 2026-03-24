@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RecipesRequest extends FormRequest
+class StoreCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,20 +23,15 @@ class RecipesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string',
-            'description' => 'string',
-            'cook_time' => 'integer',
-            'base_amount' => 'integer',
-            'guide' => 'string',
-            'country' => 'string',
-//            'ingredients' => 'array',
+            'name' => 'required, unique:categories,name',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'name.string' => 'Navnet skal være ren tekst'
+            'name.required' => 'Der skal udfyldes et navn til kategorien',
+            'name.unique' => 'Navnet på kategorien må ikke eksistere i forvejen',
         ];
     }
 }

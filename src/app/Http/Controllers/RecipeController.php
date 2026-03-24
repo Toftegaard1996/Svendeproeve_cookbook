@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Recipes;
-use App\Http\Requests\RecipesRequest;
+use App\Models\Recipe;
+use App\Http\Requests\RecipeRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class RecipesController extends Controller
+class RecipeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,9 +28,9 @@ class RecipesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RecipesRequest $request)
+    public function store(RecipeRequest $request)
     {
-        Recipes::create([
+        Recipe::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'cook_time' => $request->input('cook_time'),
@@ -43,7 +43,7 @@ class RecipesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Recipes $recipes)
+    public function show(Recipe $recipes)
     {
         //
     }
@@ -51,7 +51,7 @@ class RecipesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Recipes $recipes)
+    public function edit(Recipe $recipes)
     {
         //
     }
@@ -59,7 +59,7 @@ class RecipesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRecipesRequest $request, Recipes $recipes)
+    public function update(UpdateRecipesRequest $request, Recipe $recipes)
     {
         //
     }
@@ -67,7 +67,7 @@ class RecipesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Recipes $recipes)
+    public function destroy(Recipe $recipes)
     {
         //
     }

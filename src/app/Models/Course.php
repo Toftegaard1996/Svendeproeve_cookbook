@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Database\Factories\CategoriesFactory;
+use Database\Factories\CourseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Categories extends Model
+class Course extends Model
 {
-    /** @use HasFactory<CategoriesFactory> */
+    /** @use HasFactory<CourseFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -18,6 +18,6 @@ class Categories extends Model
 
     public function recipes(): BelongsToMany
     {
-        return $this->belongsToMany(Recipes::class, 'category_recipe')->withTimestamps();
+        return $this->belongsToMany(Recipe::class, 'course_recipe')->withTimestamps();
     }
 }

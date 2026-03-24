@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Recipes;
+use App\Models\Recipe;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Recipes>
+ * @extends Factory<Recipe>
  */
-class RecipesFactory extends Factory
+class RecipeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -23,6 +23,7 @@ class RecipesFactory extends Factory
             'cook_time' => $this->faker->numberBetween(1, 120),
             'base_amount' => $this->faker->numberBetween(1, 10),
             'guide' => $this->faker->text(),
+            'country' => $this->faker->country(),
         ];
     }
 }

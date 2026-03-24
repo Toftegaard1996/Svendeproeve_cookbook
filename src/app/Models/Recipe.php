@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Database\Factories\RecipesFactory;
+use Database\Factories\RecipeFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Recipes extends Model
+class Recipe extends Model
 {
-    /** @use HasFactory<RecipesFactory> */
+    /** @use HasFactory<RecipeFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -28,16 +28,16 @@ class Recipes extends Model
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Categories::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function courses(): BelongsToMany
     {
-        return $this->belongsToMany(Courses::class);
+        return $this->belongsToMany(Course::class);
     }
 
     public function ingredients(): BelongsToMany
     {
-        return $this->belongsToMany(Ingredients::class);
+        return $this->belongsToMany(Ingredient::class);
     }
 }

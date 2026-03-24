@@ -5,14 +5,14 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategoriesRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -23,15 +23,7 @@ class StoreCategoriesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required, unique:categories,name',
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'Der skal udfyldes et navn til kategorien',
-            'name.unique' => 'Navnet på kategorien må ikke eksistere i forvejen',
+            //
         ];
     }
 }

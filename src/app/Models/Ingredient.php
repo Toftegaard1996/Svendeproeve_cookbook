@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Database\Factories\IngredientsFactory;
+use Database\Factories\IngredientFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Ingredients extends Model
+class Ingredient extends Model
 {
-    /** @use HasFactory<IngredientsFactory> */
+    /** @use HasFactory<IngredientFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -18,7 +18,7 @@ class Ingredients extends Model
 
     public function recipes(): BelongsToMany
     {
-        return $this->belongsToMany(Recipes::class, 'ingredient_recipe')
+        return $this->belongsToMany(Recipe::class, 'ingredient_recipe')
             ->withPivot('measurements', 'unit')
             ->withTimestamps();
     }

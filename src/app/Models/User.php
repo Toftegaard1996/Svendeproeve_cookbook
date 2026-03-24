@@ -55,7 +55,7 @@ class User extends Authenticatable
 
     public function recipes(): BelongsToMany
     {
-        return $this->belongsToMany(Recipes::class, 'recipe_user')
+        return $this->belongsToMany(Recipe::class, 'recipe_user')
             ->withPivot('notes')
             ->withTimestamps();
     }

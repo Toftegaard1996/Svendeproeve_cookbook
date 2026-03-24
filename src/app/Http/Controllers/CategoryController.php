@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categories;
-use App\Http\Requests\StoreCategoriesRequest;
-use App\Http\Requests\UpdateCategoriesRequest;
+use App\Models\Category;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class CategoriesController extends Controller
     public function index()
     {
         return Inertia::render('categories/Index', [
-            'categories' => Categories::all(),
+            'categories' => Category::all(),
         ]);
     }
 
@@ -31,9 +31,9 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoriesRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
-        Categories::create([
+        Category::create([
             'name' => $request->input('name'),
         ]);
 
@@ -43,7 +43,7 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Categories $categories)
+    public function show(Category $categories)
     {
         //
     }
@@ -51,7 +51,7 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Categories $categories)
+    public function edit(Category $categories)
     {
         //
     }
@@ -59,7 +59,7 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoriesRequest $request, Categories $categories)
+    public function update(UpdateCategoryRequest $request, Category $categories)
     {
         //
     }
@@ -67,7 +67,7 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categories $categories)
+    public function destroy(Category $categories)
     {
         //
     }

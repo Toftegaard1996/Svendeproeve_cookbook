@@ -5,14 +5,14 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCoursesRequest extends FormRequest
+class RecipeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,20 @@ class StoreCoursesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'string',
+            'description' => 'string',
+            'cook_time' => 'integer',
+            'base_amount' => 'integer',
+            'guide' => 'string',
+            'country' => 'string',
+//            'ingredients' => 'array',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.string' => 'Navnet skal være ren tekst'
         ];
     }
 }

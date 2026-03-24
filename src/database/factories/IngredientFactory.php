@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Ingredients;
+use App\Models\Ingredient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Ingredients>
+ * @extends Factory<Ingredient>
  */
-class IngredientsFactory extends Factory
+class IngredientFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class IngredientsFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->word(),
         ];
     }
 }

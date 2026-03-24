@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ingredients;
-use App\Http\Requests\StoreIngredientsRequest;
-use App\Http\Requests\UpdateIngredientsRequest;
+use App\Models\Course;
+use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
 
-class IngredientsController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class IngredientsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreIngredientsRequest $request)
+    public function store(StoreCourseRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class IngredientsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Ingredients $ingredients)
+    public function show(Course $courses)
     {
         //
     }
@@ -43,7 +43,7 @@ class IngredientsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Ingredients $ingredients)
+    public function edit(Course $courses)
     {
         //
     }
@@ -51,7 +51,7 @@ class IngredientsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateIngredientsRequest $request, Ingredients $ingredients)
+    public function update(UpdateCourseRequest $request, Course $courses)
     {
         //
     }
@@ -59,7 +59,7 @@ class IngredientsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ingredients $ingredients)
+    public function destroy(Course $courses)
     {
         //
     }
