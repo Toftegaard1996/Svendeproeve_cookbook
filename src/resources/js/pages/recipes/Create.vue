@@ -1,13 +1,13 @@
 <script setup lang="ts">
 
-import {index as category_index, store} from "@/routes/categories";
+import {index as category_index, store} from "@/routes/category";
 import {Button} from "@/components/ui/button";
 import {Form, Head, useForm} from "@inertiajs/vue3";
 import AppLayout from "@/layouts/AppLayout.vue";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import type {BreadcrumbItem} from "@/types";
-import {dashboard} from "@/routes";
+import { index as dashboard } from '@/routes/recipe';
 import InputError from "@/components/InputError.vue";
 import TextAreaInput from "@/components/ui/input/TextAreaInput.vue";
 

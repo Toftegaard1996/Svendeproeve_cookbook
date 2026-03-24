@@ -14,10 +14,11 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+// import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
-import { index as category_index }  from "@/routes/categories";
-import { create as recipe_create } from "@/routes/recipes";
+import { index as dashboard } from "@/routes/recipe"
+import { index as category_index }  from "@/routes/category";
+import { create as recipe_create } from "@/routes/recipe";
 
 const mainNavItems: NavItem[] = [
     {

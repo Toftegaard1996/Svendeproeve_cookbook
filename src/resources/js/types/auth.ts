@@ -1,4 +1,4 @@
-import Recipes from "@/routes/recipes";
+import Recipes from "@/routes/recipe";
 
 export type User = {
     id: number;
@@ -33,6 +33,9 @@ export type Recipe = {
     course_recipe?: Course_Recipe;
     ingredient_recipe?: Ingredient_Recipe;
     recipe_user?: Recipe_User;
+    courses?: Course;
+    categories?: Category;
+    ingredients?: Ingredient;
 }
 
 export type Recipe_User = {

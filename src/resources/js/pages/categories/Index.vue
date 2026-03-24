@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import {Form, Head, useForm} from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { dashboard } from '@/routes';
-import type {BreadcrumbItem, Categories} from '@/types';
+import { index as dashboard } from '@/routes/recipe';
+import type {BreadcrumbItem, Category} from '@/types';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import InputError from "@/components/InputError.vue";
-import { index as category_index, store }  from "@/routes/categories";
+import { index as category_index, store }  from "@/routes/category";
 import { Image, Clock } from 'lucide-vue-next';
 import {Button} from "@/components/ui/button";
+import { route } from 'ziggy-js'
 
 defineProps<{
-    categories: Categories[]
+    categories: Category[]
 }>()
 
 const form = useForm({
-    name: 'Suppe',
+    name: 'Steak',
 })
 
 
@@ -29,6 +30,10 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: category_index(),
     },
 ];
+
+function submit(){
+    form.post(route('category'));
+}
 </script>
 
 <template>
@@ -46,7 +51,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <div class="p-6">
                             <h2 class="text-xl font-semibold border-b border-gray-900 mb-4">Tilføj kategori</h2>
                             <p>Kategorien skal være unik</p>
-                            <form v-bind="store.form()"
+                            <form @submit.prevent="submit"
                                   :reset-on-success="['password']"
                                   class="w-full p-8">
                                 <div class="grid gap-2">

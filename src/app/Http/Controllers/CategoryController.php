@@ -37,7 +37,7 @@ class CategoryController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        return Redirect::route('categories.index');
+        return Redirect::route('category.index');
     }
 
     /**

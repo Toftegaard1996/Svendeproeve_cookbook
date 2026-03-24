@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateRecipeRequest;
 use App\Models\Recipe;
-use App\Http\Requests\RecipeRequest;
+use App\Http\Requests\StoreRecipeRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -12,9 +13,11 @@ class RecipeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Inertia::render('Dashboard', [
+            'recipes' => $request->user()->recipes()->with('courses')->with('categories')->get()
+        ]);
     }
 
     /**
@@ -28,7 +31,7 @@ class RecipeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RecipeRequest $request)
+    public function store(StoreRecipeRequest $request)
     {
         Recipe::create([
             'name' => $request->input('name'),
@@ -43,9 +46,20 @@ class RecipeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Recipe $recipes)
+    public function show(Request $request, Recipe $recipe)
     {
-        //
+//        dd([
+//            'full_url' => $request->fullUrl(),
+//            'route_params' => $request->route()->parameters(),
+//            'recipe' => $recipe,
+//            'recipe_id' => $recipe->id,
+//        ]);
+        return Inertia::render('recipes/Show', [
+            'recipe' => $request->user()->recipes()
+                ->with(['courses', 'categories', 'ingredients'])
+                ->where('recipe_id', $recipe->id)
+                ->firstOrFail()
+        ]);
     }
 
     /**
@@ -59,9 +73,14 @@ class RecipeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRecipesRequest $request, Recipe $recipes)
+    public function update(UpdateRecipeRequest $request, Recipe $recipe)
     {
-        //
+        $request->user()->recipes()->updateExistingPivot($recipe->id, [
+            'notes' => $request->input('notes'),
+        ]);
+
+//        Feedback::notification('Rating, ejerskab og læsedage opdateret');
+        return redirect()->route('recipe.show', ['recipe' => $recipe]);
     }
 
     /**

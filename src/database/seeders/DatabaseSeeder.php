@@ -31,10 +31,10 @@ class DatabaseSeeder extends Seeder
         $categories = Category::factory(10)->create();
 
         foreach ($recipes as $recipe) {
-            $user->recipes()->syncWithPivotValues($recipe, ['notes' => Str::random(100)]);
             $recipe->ingredients()->syncWithPivotValues($ingredients, ['measurements' => random_int(1, 1000), 'unit' => Str::random(10)]);
             $recipe->courses()->syncWithPivotValues($courses, []);
             $recipe->categories()->syncWithPivotValues($categories, []);
         }
+        $user->recipes()->syncWithPivotValues($recipes, ['notes' => Str::random(100)]);
     }
 }

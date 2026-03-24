@@ -10,7 +10,6 @@ Route::inertia('/', 'auth/Login', [
 ])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'Dashboard')->name('dashboard');
     Route::resource('/recipe', RecipeController::class);
     Route::resource('/category', CategoryController::class)->only(['index', 'store', 'destroy']);
 });
