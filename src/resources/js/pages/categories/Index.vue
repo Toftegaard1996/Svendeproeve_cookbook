@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Form, Head, useForm} from '@inertiajs/vue3';
+import {Head, useForm} from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { index as dashboard } from '@/routes/recipe';
 import type {BreadcrumbItem, Category} from '@/types';
@@ -9,14 +9,13 @@ import InputError from "@/components/InputError.vue";
 import { index as category_index, store }  from "@/routes/category";
 import { Image, Clock } from 'lucide-vue-next';
 import {Button} from "@/components/ui/button";
-import { route } from 'ziggy-js'
 
 defineProps<{
     categories: Category[]
 }>()
 
 const form = useForm({
-    name: 'Steak',
+    name: '',
 })
 
 
@@ -32,7 +31,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 function submit(){
-    form.post(route('category'));
+    form.post(route('category.store'));
 }
 </script>
 
@@ -52,7 +51,7 @@ function submit(){
                             <h2 class="text-xl font-semibold border-b border-gray-900 mb-4">Tilføj kategori</h2>
                             <p>Kategorien skal være unik</p>
                             <form @submit.prevent="submit"
-                                  :reset-on-success="['password']"
+                                  :reset-on-success="['name']"
                                   class="w-full p-8">
                                 <div class="grid gap-2">
                                     <Label for="name">Kategori navn</Label>
