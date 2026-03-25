@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Head, useForm} from '@inertiajs/vue3';
+import {Form, Head, useForm} from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { index as dashboard } from '@/routes/recipe';
 import type {BreadcrumbItem, Category} from '@/types';
@@ -9,14 +9,15 @@ import InputError from "@/components/InputError.vue";
 import { index as category_index, store }  from "@/routes/category";
 import { Image, Clock } from 'lucide-vue-next';
 import {Button} from "@/components/ui/button";
+import CategoryController from "@/actions/App/Http/Controllers/CategoryController";
 
 defineProps<{
     categories: Category[]
 }>()
 
-const form = useForm({
-    name: '',
-})
+// const form = useForm({
+//     name: '',
+// })
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -30,9 +31,9 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-function submit(){
-    form.post(route('category.store'));
-}
+// function submit(){
+//     form.post(route('category.store'));
+// }
 </script>
 
 <template>
@@ -50,19 +51,28 @@ function submit(){
                         <div class="p-6">
                             <h2 class="text-xl font-semibold border-b border-gray-900 mb-4">Tilføj kategori</h2>
                             <p>Kategorien skal være unik</p>
-                            <form @submit.prevent="submit"
+                            <Form v-bind="CategoryController.store.form()"
                                   :reset-on-success="['name']"
-                                  class="w-full p-8">
+                                  class="w-full p-8"
+                                  v-slot="{ errors, processing, recentlySuccessful }"
+                            >
                                 <div class="grid gap-2">
                                     <Label for="name">Kategori navn</Label>
-                                    <Input v-model="form.name" placeholder="Suppe"/>
-                                    <InputError :message="form.errors.name" />
+                                    <Input id="name" name="name" placeholder="Suppe" required/>
+                                    <InputError :message="errors.name" />
                                 </div>
                                 <Button type="submit" variant="submit" class="mt-4">Gem kategori</Button>
-                            </form>
+                            </Form>
                             <h2 class="text-xl font-semibold border-b border-gray-900 mt-10 mb-4">Kategorier der er registreret</h2>
-                            <div v-for="row in categories" :key="row.id" class="flex flex-row">
-                                <p>{{row.name}}</p>
+                            <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-6">
+                                <div
+                                    v-for="row in categories"
+                                    :key="row.id"
+                                    class="flex flex-row gap-2 p-2 items-center justify-around border-2 border-emerald-600 dark:border-emerald-800 rounded"
+                                >
+                                    <p>{{row.name}}</p>
+<!--                                    <Button variant="ghost" class="p-1">X</Button>--> <!-- TODO: Add deletemodal, so the categori can be deleted -->
+                                </div>
                             </div>
                         </div>
                     </div>
