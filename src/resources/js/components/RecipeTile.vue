@@ -15,7 +15,6 @@ defineProps<{
                 <Image class="mx-auto h-24 w-24"/>
             </div>
             <p class="font-bold">{{ item.name }}</p>
-            <p class="font-bold">{{ item.id }}</p>
             <p>{{ item.description }}</p>
             <div class="flex flex-row justify-end w-full mt-2">
                 <div class="flex flex-row">

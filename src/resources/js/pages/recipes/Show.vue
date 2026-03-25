@@ -7,6 +7,7 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import type {BreadcrumbItem, Recipe} from "@/types";
 import { index as dashboard } from '@/routes/recipe';
+import { Clock, Image } from 'lucide-vue-next';
 
 defineProps<{
     recipe: Recipe
@@ -37,7 +38,19 @@ const breadcrumbs: BreadcrumbItem[] = [
                         class="overflow-hidden bg-gray-100 dark:bg-gray-700 rounded-lg"
                     >
                         <div class="p-6">
-                            <h2 class="text-xl font-semibold border-b border-gray-900 mb-4">Se opskrift</h2>
+                            <h2 class="text-xl font-semibold border-b border-gray-900 mb-4">{{ recipe.name }}</h2>
+                            <p>{{ recipe.description }}</p>
+                            <div class="flex md:flex-row justify-between mt-6">
+                                <div>
+                                    <p>Ingredienser:</p>
+                                    <div v-for="item in recipe.ingredients">
+                                        {{ item.pivot.measurements }} {{ item.pivot.unit }} {{ item.name }}
+                                    </div>
+                                </div>
+                                <div class="border border-red-500">
+                                    <Image class="w-44 h-44" />
+                                </div>
+                            </div>
 
                         </div>
                     </div>

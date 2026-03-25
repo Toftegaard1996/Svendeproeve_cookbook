@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('recipe_id')->references('id')->on('recipes');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('notes')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

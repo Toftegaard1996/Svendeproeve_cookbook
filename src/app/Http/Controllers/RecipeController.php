@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateRecipeRequest;
 use App\Models\Recipe;
 use App\Http\Requests\StoreRecipeRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class RecipeController extends Controller
@@ -33,14 +34,21 @@ class RecipeController extends Controller
      */
     public function store(StoreRecipeRequest $request)
     {
-        Recipe::create([
+        $recipe = Recipe::create([
             'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'cook_time' => $request->input('cook_time'),
+            'description' => $request->input('description') ?? null,
+            'cook_time' => $request->input('cook_time') ?? null,
             'base_amount' => $request->input('base_amount'),
-            'guide' => $request->input('guide'),
-            'country' => $request->input('country'),
+            'guide' => $request->input('guide') ?? "",
+            'country' => $request->input('country') ?? null,
         ]);
+
+        //Create attachment between user and recipe
+        $request->user()->recipes()->attach($recipe->id, [
+            'notes' => $request->input('notes'),
+        ]);
+
+        return redirect()->route('recipe.show', ['recipe' => $recipe]);
     }
 
     /**

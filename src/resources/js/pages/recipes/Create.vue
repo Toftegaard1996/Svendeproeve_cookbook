@@ -10,15 +10,16 @@ import type {BreadcrumbItem} from "@/types";
 import { index as dashboard } from '@/routes/recipe';
 import InputError from "@/components/InputError.vue";
 import TextAreaInput from "@/components/ui/input/TextAreaInput.vue";
+import RecipeController from "@/actions/App/Http/Controllers/RecipeController";
 
-const form = useForm({
-    name: '',
-    description: '',
-    cook_time: 0,
-    base_amount: 0,
-    guide: '',
-    country: '',
-})
+// const form = useForm({
+//     name: '',
+//     description: '',
+//     cook_time: 0,
+//     base_amount: 0,
+//     guide: '',
+//     country: '',
+// })
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -46,44 +47,52 @@ const breadcrumbs: BreadcrumbItem[] = [
                     >
                         <div class="p-6">
                             <h2 class="text-xl font-semibold border-b border-gray-900">Tilføj opskrift</h2>
-                            <form v-bind="store.form()"
-                                  :reset-on-success="['password']"
-                                  class="w-full p-8">
+                            <Form v-bind="RecipeController.store.form()"
+                                  class="w-full p-8"
+                                  v-slot="{ errors, processing, recentlySuccessful }"
+                            >
                                 <div class="grid gap-2">
                                     <Label for="name">Navn på opskriften</Label>
-                                    <Input v-model="form.name" placeholder="Lasagne"/>
-                                    <InputError :message="form.errors.name" />
+                                    <Input id="name" name="name" placeholder="Lasagne"/>
+                                    <InputError :message="errors.name" />
                                 </div>
                                 <div class="grid gap-2 mt-6">
                                     <Label for="description">Beskrivelse</Label>
-                                    <Input v-model="form.description" placeholder="Verdens bedste lasagne til den studerende"/>
-                                    <InputError :message="form.errors.description" />
+                                    <Input id="description" name="description" placeholder="Verdens bedste lasagne til den studerende"/>
+                                    <InputError :message="errors.description" />
                                 </div>
                                 <div class="grid gap-2 mt-6">
                                     <Label for="cook_time">Arbejdstid (angivet i minutter)</Label>
-                                    <Input v-model="form.cook_time" placeholder="90"/>
-                                    <InputError :message="form.errors.cook_time" />
+                                    <Input id="cook_time" name="cook_time" placeholder="90"/>
+                                    <InputError :message="errors.cook_time" />
                                 </div>
+                                <!-- TODO: Add ingredients -->
                                 <div class="grid gap-2 mt-6">
                                     <Label for="base_amount">Antal personer</Label>
-                                    <Input v-model="form.base_amount" placeholder="Lasagne"/>
-                                    <InputError :message="form.errors.base_amount" />
+                                    <Input id="base_amount" name="base_amount" placeholder="4"/>
+                                    <InputError :message="errors.base_amount" />
                                 </div>
                                 <div class="grid gap-2 mt-6">
                                     <Label for="guide">Fremgangsmåde</Label>
-                                    <TextAreaInput v-model="form.guide" placeholder="Til kødet, varmer du først en pande på høj varme ..."/>
-                                    <InputError :message="form.errors.guide" />
+                                    <TextAreaInput id="guide" name="guide" placeholder="Til kødet, varmer du først en pande på høj varme ..."/>
+                                    <InputError :message="errors.guide" />
+                                </div>
+                                <div class="grid gap-2 mt-6">
+                                    <Label for="notes">Egne noter (Disse noter kan kun ses af dig)</Label>
+                                    <Input id="notes" name="notes" placeholder="Til min ovn, passer 240 grader bedst"/>
+                                    <InputError :message="errors.notes" />
                                 </div>
                                 <div class="grid gap-2 mt-6">
                                     <Label for="country">Oprindelses land</Label>
-                                    <Input v-model="form.country" placeholder="Danmark"/>
-                                    <InputError :message="form.errors.country" />
+                                    <Input id="country" name="country" placeholder="Danmark"/>
+                                    <InputError :message="errors.country" />
                                 </div>
                                 <div class="grid gap-2 mt-6">
                                     <Label for="country">Tilføj billede (coming soon)</Label>
                                 </div>
+                                <!-- TODO: Add categories and course -->
                                 <Button type="submit" variant="submit" class="mt-6">Gem opskrift</Button>
-                            </form>
+                            </Form>
 
                         </div>
                     </div>

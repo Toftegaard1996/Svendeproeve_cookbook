@@ -23,12 +23,13 @@ class StoreRecipeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string',
-            'description' => 'string',
-            'cook_time' => 'integer',
-            'base_amount' => 'integer',
-            'guide' => 'string',
-            'country' => 'string',
+            'name' => 'string|required',
+            'description' => 'string|nullable',
+            'cook_time' => 'integer|nullable',
+            'base_amount' => 'integer|required',
+            'guide' => 'string|nullable',
+            'country' => 'string|nullable',
+            'notes' => 'string|nullable',
 //            'ingredients' => 'array',
         ];
     }
@@ -36,7 +37,13 @@ class StoreRecipeRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.string' => 'Navnet skal være ren tekst'
+            'name.required' => 'Navnet på opskriften skal udfyldes',
+            'name.string' => 'Navnet skal være ren tekst',
+            'description.string' => 'Navnet skal være ren tekst',
+            'cook_time.integer' => 'Arbejdstiden skal angives i hele minutter',
+            'base_amount.integer' => 'Antal personer skal angives i hele tal',
+            'guide.string' => 'Fremgangsmåden skal være ren tekst',
+            'notes.string' => 'Noter skal være ren tekst',
         ];
     }
 }
