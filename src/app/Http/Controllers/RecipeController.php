@@ -94,8 +94,11 @@ class RecipeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Recipe $recipes)
+    public function destroy(Request $request, Recipe $recipes)
     {
-        //
+        dd($recipes->id);
+        $request->user()->recipes()->detach($recipes->id);
+
+        return redirect()->route('recipe.index');
     }
 }
