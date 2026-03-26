@@ -6,11 +6,12 @@ import {Form, Head, useForm} from "@inertiajs/vue3";
 import AppLayout from "@/layouts/AppLayout.vue";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
-import type {BreadcrumbItem} from "@/types";
+import type {BreadcrumbItem, Category} from "@/types";
 import { index as dashboard } from '@/routes/recipe';
 import InputError from "@/components/InputError.vue";
 import TextAreaInput from "@/components/ui/input/TextAreaInput.vue";
 import RecipeController from "@/actions/App/Http/Controllers/RecipeController";
+import TagInput from "@/components/TagInput.vue";
 
 // const form = useForm({
 //     name: '',
@@ -20,6 +21,10 @@ import RecipeController from "@/actions/App/Http/Controllers/RecipeController";
 //     guide: '',
 //     country: '',
 // })
+
+defineProps<{
+    categories: Category[],
+}>()
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -68,6 +73,11 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 </div>
                                 <!-- TODO: Add ingredients -->
                                 <div class="grid gap-2 mt-6">
+                                    <Label for="ingredients">Ingredienser</Label>
+<!--                                    <Input id="base_amount" name="base_amount" placeholder="4"/>-->
+<!--                                    <InputError :message="errors.base_amount" />-->
+                                </div>
+                                <div class="grid gap-2 mt-6">
                                     <Label for="base_amount">Antal personer</Label>
                                     <Input id="base_amount" name="base_amount" placeholder="4"/>
                                     <InputError :message="errors.base_amount" />
@@ -78,15 +88,22 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     <InputError :message="errors.guide" />
                                 </div>
                                 <div class="grid gap-2 mt-6">
+                                    <Label for="country">Oprindelses land</Label>
+                                    <Input id="country" name="country" placeholder="Danmark"/>
+                                    <InputError :message="errors.country" />
+                                </div>
+                                <div class="grid gap-2 mt-6">
                                     <Label for="notes">Egne noter (Disse noter kan kun ses af dig)</Label>
                                     <Input id="notes" name="notes" placeholder="Til min ovn, passer 240 grader bedst"/>
                                     <InputError :message="errors.notes" />
                                 </div>
                                 <div class="grid gap-2 mt-6">
-                                    <Label for="country">Oprindelses land</Label>
-                                    <Input id="country" name="country" placeholder="Danmark"/>
-                                    <InputError :message="errors.country" />
+                                    <Label for="categories">Kategorier (Vælg en til flere)</Label>
+                                    <TagInput :category="categories"></TagInput>
+<!--                                    <Input id="country" name="country" placeholder="Danmark"/>-->
+<!--                                    <InputError :message="errors.country" />-->
                                 </div>
+
                                 <div class="grid gap-2 mt-6">
                                     <Label for="country">Tilføj billede (coming soon)</Label>
                                 </div>

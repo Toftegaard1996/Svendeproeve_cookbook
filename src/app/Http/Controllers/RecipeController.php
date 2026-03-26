@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateRecipeRequest;
+use App\Models\Category;
+use App\Models\Course;
+use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Http\Requests\StoreRecipeRequest;
 use Illuminate\Http\Request;
@@ -26,7 +29,11 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        return Inertia::render('recipes/Create', []);
+        return Inertia::render('recipes/Create', [
+            'categories' => Category::all(),
+            'courses' => Course::all(),
+            'ingredients' => Ingredient::all()
+        ]);
     }
 
     /**
