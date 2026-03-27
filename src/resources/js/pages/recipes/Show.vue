@@ -123,7 +123,10 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
         </div>
         <DeleteModal :open="openDelete" @close="openDelete = false" title="Vil du fjerne denne opskrift?">
-            <template #description>Er du sikker på du vil fjerne {{ recipe.name }} fra din kogebog?<br>Du kan altid gemme den igen, men dine noter vil gå tabt</template>
+            <template #description>
+                Er du sikker på du vil fjerne {{ recipe.name }} fra din kogebog?
+                <br>Du kan altid gemme den igen, men dine noter vil gå tabt
+            </template>
             <template #action>
                 <Link :href="destroy(recipe.id)" variant="destructive">
                     <Button variant="destructive">

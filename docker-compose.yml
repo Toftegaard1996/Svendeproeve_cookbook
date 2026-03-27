@@ -11,7 +11,7 @@ services:
     volumes:
       - cookBook:/var/lib/mysql
     ports:
-      - 3306:3306
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: app
@@ -20,14 +20,20 @@ services:
     volumes:
       - cookBook-test:/var/lib/mysql
     ports:
-      - 3307:3306
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: testing
       MYSQL_DATABASE: testing
   redis:
     image: redis:5.0.5-alpine
     ports:
-      - 6379:6379
+      - "6379:6379"
+  gotenberg:
+    image: gotenberg/gotenberg:8
+    ports:
+      - "3000:3000"
+      # Or more secure:
+      # - "127.0.0.1:3000:3000"
 volumes:
   cookBook:
   cookBook-test:

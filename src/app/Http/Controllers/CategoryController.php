@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Lib\Feedback;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
@@ -37,6 +38,7 @@ class CategoryController extends Controller
             'name' => $request->input('name'),
         ]);
 
+        Feedback::notification('Kategori tilføjet');
         return Redirect::route('category.index');
     }
 

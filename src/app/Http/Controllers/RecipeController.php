@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateRecipeRequest;
+use App\Lib\Feedback;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Ingredient;
@@ -55,6 +56,7 @@ class RecipeController extends Controller
             'notes' => $request->input('notes'),
         ]);
 
+        Feedback::notification('Opskrift oprettet');
         return redirect()->route('recipe.show', ['recipe' => $recipe]);
     }
 

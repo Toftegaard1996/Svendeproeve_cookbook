@@ -12,6 +12,7 @@ import InputError from "@/components/InputError.vue";
 import TextAreaInput from "@/components/ui/input/TextAreaInput.vue";
 import RecipeController from "@/actions/App/Http/Controllers/RecipeController";
 import TagInput from "@/components/TagInput.vue";
+import TagsInput from "@/components/ui/input/TagsInput.vue";
 
 // const form = useForm({
 //     name: '',
@@ -100,6 +101,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 <div class="grid gap-2 mt-6">
                                     <Label for="categories">Kategorier (Vælg en til flere)</Label>
                                     <TagInput :category="categories"></TagInput>
+                                    <TagsInput :list="categories"></TagsInput>
 <!--                                    <Input id="country" name="country" placeholder="Danmark"/>-->
 <!--                                    <InputError :message="errors.country" />-->
                                 </div>

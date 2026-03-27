@@ -19,6 +19,7 @@ import type { NavItem } from '@/types';
 import { index as dashboard } from "@/routes/recipe"
 import { index as category_index }  from "@/routes/category";
 import { create as recipe_create } from "@/routes/recipe";
+import Notification from "@/components/Notification.vue";
 
 const mainNavItems: NavItem[] = [
     {
@@ -77,4 +78,17 @@ const footerNavItems: NavItem[] = [
         </SidebarFooter>
     </Sidebar>
     <slot />
+    <!-- Notification to be used sitewide. Can be triggered through the controller -->
+<!--    <div-->
+<!--        aria-live="assertive"-->
+<!--        class="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:pt-20 sm:items-start"-->
+<!--    >-->
+<!--        <div class="w-full flex flex-col items-center space-y-4 sm:items-end">-->
+<!--            <notification-->
+<!--                v-for="(notification, index) in $page.props.flash.filter((item: any) => item.type === 'notification')"-->
+<!--                :key="index"-->
+<!--                :data="notification"-->
+<!--            />-->
+<!--        </div>-->
+<!--    </div>-->
 </template>

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import {defineComponent, ref} from 'vue';
 import Vue3TagsInput from 'vue3-tags-input';
 
 export default defineComponent ({
@@ -29,6 +29,10 @@ export default defineComponent ({
 
     props: {
         categories: Array,
+    },
+
+    setup(props) {
+        const categoryList = ref(props.categories);
     },
 
     components: {
