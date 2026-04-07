@@ -7,6 +7,7 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import type {BreadcrumbItem, Recipe} from "@/types";
 import {destroy, index as dashboard} from '@/routes/recipe';
+import {pdf} from "@/routes"
 import {Clock, Image, Printer, UserMinus, UserPlus, Plus} from 'lucide-vue-next';
 import {ref} from "vue";
 import RecipeController from "@/actions/App/Http/Controllers/RecipeController";
@@ -60,7 +61,9 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 <p>{{ recipe.description }}</p>
                                 <IconButton class="p-2">
                                     <template #icon>
-                                        <Printer />
+                                        <Link :href="pdf(recipe.id)" class="align-middle">
+                                            <Printer class="hover:cursor-pointer" />
+                                        </Link>
                                     </template>
                                 </IconButton>
                             </div>

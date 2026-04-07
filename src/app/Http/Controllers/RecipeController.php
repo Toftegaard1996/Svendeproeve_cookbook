@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateRecipeRequest;
 use App\Lib\Feedback;
+use App\Lib\Pdf;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Http\Requests\StoreRecipeRequest;
+use Gotenberg\Gotenberg;
+use Gotenberg\Stream;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -21,7 +24,7 @@ class RecipeController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Dashboard', [
-            'recipes' => $request->user()->recipes()->with('courses')->with('categories')->get()
+            'recipes' => $request->user()->recipes()->with('courses')->with('categories')->with('ingredients')->get()
         ]);
     }
 
@@ -110,11 +113,18 @@ class RecipeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Recipe $recipes)
+    public function destroy(Request $request, Recipe $recipe)
     {
-        dd($recipes->id);
-        $request->user()->recipes()->detach($recipes->id);
+        $request->user()->recipes()->detach($recipe->id);
 
         return redirect()->route('recipe.index');
+    }
+
+    public function convertToPdf(Recipe $recipe)
+    {
+        $fileName = Pdf::nameConversion($recipe->name);
+        $pdf = Pdf::render(view('pdf.index', ['recipe' => $recipe]));
+
+        return Pdf::response($pdf, $fileName);
     }
 }
