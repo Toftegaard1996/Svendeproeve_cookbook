@@ -30,6 +30,7 @@ class StoreRecipeRequest extends FormRequest
             'guide' => 'string|nullable',
             'country' => 'string|nullable',
             'notes' => 'string|nullable',
+            'categories' => 'array',
 //            'ingredients' => 'array',
         ];
     }
