@@ -11,7 +11,7 @@ import AppLayout from "@/layouts/AppLayout.vue";
 import {index as category_index} from "@/routes/category";
 import { index as dashboard } from '@/routes/recipe';
 import { store } from '@/routes/recipe'
-import type {BreadcrumbItem, Category} from "@/types";
+import type {BreadcrumbItem, Category, Course} from "@/types";
 
 const form = useForm({
     name: '',
@@ -21,10 +21,12 @@ const form = useForm({
     guide: '',
     country: '',
     categories: [],
+    courses: [],
 })
 
 defineProps<{
     categories: Category[],
+    courses: Course[]
 }>()
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -104,6 +106,10 @@ function submit() {
                                 <div class="grid gap-2 mt-6">
                                     <Label for="categories">Kategorier (Vælg en til flere)</Label>
                                     <TagsInput id="categories" v-model="form.categories" :items="categories"></TagsInput>
+                                </div>
+                                <div class="grid gap-2 mt-6">
+                                    <Label for="courses">Ret (Vælg en til flere)</Label>
+                                    <TagsInput id="courses" v-model="form.courses" :items="courses"></TagsInput>
                                 </div>
 
                                 <div class="grid gap-2 mt-6">

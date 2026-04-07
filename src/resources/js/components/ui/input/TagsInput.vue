@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ref, watch } from 'vue';
+import { X } from 'lucide-vue-next';
 
 const props = defineProps<{
     items: Array
@@ -31,9 +32,9 @@ const removeItem = (id) => {
 
 <template>
     <div>
-        <Select v-model="tag">
+        <Select v-model="tag" class="hover:cursor-pointer">
             <SelectTrigger>
-                <SelectValue placeholder="Vælg en kategori"/>
+                <SelectValue placeholder="Vælg en til flere fra listen"/>
             </SelectTrigger>
             <SelectContent>
                 <SelectItem v-for="item in items" :key="item.id" :value="item.id">
@@ -42,7 +43,10 @@ const removeItem = (id) => {
             </SelectContent>
         </Select>
         <div class="mt-1">
-            <div v-for="item in model" @click="removeItem(item)">{{ idToName(item) }}</div>
+            <div v-for="item in model" @click="removeItem(item)" class="border border-black p-1 rounded mb-1 flex flex-row items-center size-fit">
+                <div class="hover:cursor-pointer">{{ idToName(item) }}</div>
+                <X class="h-4 ml-2 hover:cursor-pointer"/>
+            </div>
         </div>
     </div>
 </template>

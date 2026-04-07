@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import {Head} from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
-import {index as dashboard} from '@/routes/recipe';
+import {index as dashboard, create} from '@/routes/recipe';
 import type {BreadcrumbItem, Recipe} from '@/types';
 import RecipeTile from "@/components/RecipeTile.vue";
+import TextLink from "@/components/TextLink.vue";
 
 defineProps<{
     recipes: Recipe[]
@@ -30,8 +31,13 @@ const breadcrumbs: BreadcrumbItem[] = [
                         class="overflow-hidden bg-gray-100 dark:bg-gray-700 rounded-lg p-6"
                     >
                         <h2 class="text-xl font-semibold mb-4">Dine gemte opskrifter</h2>
-                        <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                        <div v-if="recipes" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                             <RecipeTile :recipes="recipes"/>
+                        </div>
+                        <div v-if="!recipes">
+                            Du har ikke nogen gemte opskrifter endnu
+                            <TextLink :href="create()" :tabindex="5">Tilføj en her</TextLink>
+<!--                            <TextLink :href="?()" :tabindex="5">Eller find en allerede oprettet opskrift her</TextLink>-->
                         </div>
                     </div>
                 </div>

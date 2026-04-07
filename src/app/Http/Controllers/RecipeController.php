@@ -56,7 +56,12 @@ class RecipeController extends Controller
             'notes' => $request->input('notes'),
         ]);
 
-        $recipe->categories()->sync($request->input('categories'));
+        if (!empty($request->input('categories'))) {
+            $recipe->categories()->sync($request->input('categories'));
+        }
+        if (!empty($request->input('courses'))) {
+            $recipe->courses()->sync($request->input('courses'));
+        }
 
         Feedback::notification('Opskrift oprettet');
         return redirect()->route('recipe.show', ['recipe' => $recipe]);

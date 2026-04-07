@@ -7,7 +7,7 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import type {BreadcrumbItem, Recipe} from "@/types";
 import {destroy, index as dashboard} from '@/routes/recipe';
-import {Clock, Image, Printer, UserMinus, UserPlus} from 'lucide-vue-next';
+import {Clock, Image, Printer, UserMinus, UserPlus, Plus} from 'lucide-vue-next';
 import {ref} from "vue";
 import RecipeController from "@/actions/App/Http/Controllers/RecipeController";
 import DeleteModal from "@/components/DeleteModal.vue";
@@ -82,12 +82,35 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 <Clock class="mr-2"/>
                                 <p>Arbejdestid {{ recipe.cook_time }} min.</p>
                             </div>
+                            <div class="my-3">
+                                <p class="mb-1">Kategorier:</p>
+                                <div class="flex flex-row gap-2">
+                                    <div v-for="item in recipe.categories" class="border border-gray-400 py-1 px-2 text-sm text-gray-300 rounded">
+                                        <div>{{item.name}}</div>
+                                    </div>
+<!--                                    <div class="border border-gray-400 p-1 text-sm text-gray-300 rounded">-->
+<!--                                        <Plus class="h-5"/>-->
+<!--                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <p class="mb-1">Ret:</p>
+                                <div class="flex flex-row gap-2">
+                                    <div v-for="item in recipe.courses" class="border border-gray-400 py-1 px-2 text-sm text-gray-300 rounded">
+                                        <div>{{item.name}}</div>
+                                    </div>
+<!--                                    <div class="border border-gray-400 p-1 text-sm text-gray-300 rounded">-->
+<!--                                        <Plus class="h-5"/>-->
+<!--                                    </div>-->
+                                </div>
+                            </div>
                             <div class="flex flex-col-reverse md:flex-row justify-between mt-6">
                                 <div>
                                     <p>Ingredienser:</p>
-                                    <div v-for="item in recipe.ingredients">
+                                    <div v-if="recipe.ingredients" v-for="item in recipe.ingredients">
                                         {{ item.pivot.measurements }} {{ item.pivot.unit }} {{ item.name }}
                                     </div>
+                                    <div v-if="!recipe.ingredients">Ingen ingredienset tilføjet</div>
                                 </div>
                                 <div class="border border-red-500 w-1/3">
                                     <Image class="w-full h-44" />

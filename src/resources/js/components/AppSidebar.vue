@@ -78,7 +78,7 @@ const footerNavItems: NavItem[] = [
         </SidebarFooter>
     </Sidebar>
     <slot />
-    <!-- Notification to be used sitewide. Can be triggered through the controller -->
+<!--&lt;!&ndash;     Notification to be used sitewide. Can be triggered through the controller &ndash;&gt;-->
 <!--    <div-->
 <!--        aria-live="assertive"-->
 <!--        class="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:pt-20 sm:items-start"-->
