@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('base_amount');
             $table->text('guide')->nullable();
             $table->string('country')->nullable();
+            $table->string('image_name')->unique()->nullable();
             $table->timestamps();
         });
     }

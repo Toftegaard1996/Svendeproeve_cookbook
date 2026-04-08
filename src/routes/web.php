@@ -12,7 +12,7 @@ Route::inertia('/', 'auth/Login', [
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/recipe', RecipeController::class);
     Route::resource('/category', CategoryController::class)->only(['index', 'store', 'destroy']);
-    Route::post("/pdf/{recipe}", [RecipeController::class, "convertToPdf"])->name("pdf");
+    Route::get("/pdf/{recipe}", [RecipeController::class, "convertToPdf"])->name("pdf");
 });
 
 require __DIR__.'/settings.php';

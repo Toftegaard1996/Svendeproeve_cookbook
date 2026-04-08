@@ -13,6 +13,7 @@ use App\Http\Requests\StoreRecipeRequest;
 use Gotenberg\Gotenberg;
 use Gotenberg\Stream;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -120,10 +121,15 @@ class RecipeController extends Controller
         return redirect()->route('recipe.index');
     }
 
-    public function convertToPdf(Recipe $recipe)
+    public function convertToPdf(Request $request, Recipe $recipe): Response
     {
         $fileName = Pdf::nameConversion($recipe->name);
-        $pdf = Pdf::render(view('pdf.index', ['recipe' => $recipe]));
+        $recipeWithPivots = $request->user()->recipes()
+            ->with(['courses', 'categories', 'ingredients'])
+            ->where('recipe_id', $recipe->id)
+            ->firstOrFail();
+        $imageName = $recipe->image_name ?? '';
+        $pdf = Pdf::render(view('pdf.index', ['recipe' => $recipeWithPivots]), $imageName);
 
         return Pdf::response($pdf, $fileName);
     }

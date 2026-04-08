@@ -113,9 +113,9 @@ function submit() {
                                 </div>
 
                                 <div class="grid gap-2 mt-6">
-                                    <Label for="country">Tilføj billede (coming soon)</Label>
+                                    <Label for="image_name">Tilføj billede (coming soon)</Label>
+                                    <Input type="file" id="image_name"/>
                                 </div>
-                                <!-- TODO: Add categories and course -->
                                 <Button type="submit" variant="submit" class="mt-6">Gem opskrift</Button>
                             </Form>
 

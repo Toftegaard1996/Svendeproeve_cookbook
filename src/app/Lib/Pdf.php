@@ -9,15 +9,19 @@ use Psr\Http\Message\ResponseInterface;
 
 class Pdf
 {
-    public static function render(string $html): ResponseInterface
+    public static function render(string $html, string $imageName): ResponseInterface
     {
+        if ($imageName == '') {
+            $imageName = 'background2.webp';
+        }
         $pdf = Gotenberg::chromium("http://gotenberg:3000")
             ->pdf()
             ->paperSize(8.27, 11.7)
-            ->assets(Stream::path(public_path('pdf/clock.svg')))
+            ->assets(Stream::path(public_path('pdfImg/clock.svg')))
+            ->assets(Stream::path(public_path('img/' . $imageName)))
             ->html(Stream::string('recipe.pdf', $html));
 
-        return $pdf;
+        return Gotenberg::send($pdf);
     }
 
     public static function response(ResponseInterface $response, string $filename): Response

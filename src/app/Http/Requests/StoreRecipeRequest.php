@@ -29,9 +29,11 @@ class StoreRecipeRequest extends FormRequest
             'base_amount' => 'integer|required',
             'guide' => 'string|nullable',
             'country' => 'string|nullable',
+            'image_name' => 'string|unique|nullable',
             'notes' => 'string|nullable',
             'categories' => 'array',
-//            'ingredients' => 'array',
+            'courses' => 'array',
+            'ingredients' => 'array',
         ];
     }
 
@@ -45,6 +47,7 @@ class StoreRecipeRequest extends FormRequest
             'base_amount.integer' => 'Antal personer skal angives i hele tal',
             'guide.string' => 'Fremgangsmåden skal være ren tekst',
             'notes.string' => 'Noter skal være ren tekst',
+            'image_name.unique' => 'Navnet på billede eksisterer allerede, giv det venligst et andet navn',
         ];
     }
 }

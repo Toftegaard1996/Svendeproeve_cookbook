@@ -50,7 +50,7 @@ Nulla eleifend, diam in eleifend porta, felis sem dictum ligula, vitae facilisis
             $recipe->courses()->syncWithPivotValues($courses, []);
             $recipe->categories()->syncWithPivotValues($categories, []);
         }
-        $user->recipes()->syncWithPivotValues($recipes, ['notes' => Str::random(100)]);
+        $user->recipes()->syncWithPivotValues($recipes, ['notes' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec neque ut ex sodales suscipit nec vel libero']);
 
         $validRecipe->ingredients()->syncWithPivotValues($ingredients, [
             'measurements' => random_int(1, 1000),

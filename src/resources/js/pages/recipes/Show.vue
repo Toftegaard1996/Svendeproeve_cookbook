@@ -14,7 +14,7 @@ import RecipeController from "@/actions/App/Http/Controllers/RecipeController";
 import DeleteModal from "@/components/DeleteModal.vue";
 import IconButton from "@/components/IconButton.vue";
 
-defineProps<{
+const props = defineProps<{
     recipe: Recipe
 }>()
 
@@ -27,6 +27,19 @@ function openDeleteModal(item: Recipe) {
 
     recipeToBeDeleted = item;
 
+}
+
+const baseAmount = props.recipe.base_amount;
+let addedOrRemoved = 0;
+
+const addPerson = () => {
+    addedOrRemoved++;
+    console.log(addedOrRemoved);
+}
+
+const removePerson = () => {
+    addedOrRemoved--;
+    console.log(addedOrRemoved);
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -59,23 +72,23 @@ const breadcrumbs: BreadcrumbItem[] = [
                             </div>
                             <div class="flex flex-col-reverse md:flex-row md:justify-between items-center">
                                 <p>{{ recipe.description }}</p>
-                                <IconButton class="p-2">
+                                <IconButton class="p-2 ml-4">
                                     <template #icon>
-                                        <Link :href="pdf(recipe.id)" class="align-middle">
+                                        <a :href="'/pdf/' + recipe.id" target="_blank" class="align-middle">
                                             <Printer class="hover:cursor-pointer" />
-                                        </Link>
+                                        </a>
                                     </template>
                                 </IconButton>
                             </div>
                             <p class="mt-2">Oprindelsesland: {{ recipe.country }}</p>
                             <div class="flex flex-row gap-2 my-3">
-                                <IconButton>
+                                <IconButton @click="removePerson">
                                     <template #icon>
                                         <UserMinus class="h-4 w-4"/>
                                     </template>
                                 </IconButton>
                                 <p>Til {{ recipe.base_amount }} personer</p>
-                                <IconButton>
+                                <IconButton @click="addPerson">
                                     <template #icon>
                                         <UserPlus class="h-4 w-4"/>
                                     </template>
@@ -113,7 +126,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     <div v-if="recipe.ingredients" v-for="item in recipe.ingredients">
                                         {{ item.pivot.measurements }} {{ item.pivot.unit }} {{ item.name }}
                                     </div>
-                                    <div v-if="!recipe.ingredients">Ingen ingredienset tilføjet</div>
+                                    <div v-if="!recipe.ingredients">Ingen ingredienser tilføjet</div>
                                 </div>
                                 <div class="border border-red-500 w-1/3">
                                     <Image class="w-full h-44" />
@@ -131,7 +144,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 <!--                                        <InputError :message="errors.notes" />-->
                                     </div>
                                     <div v-if="!canEdit" class="p-2 mt-2 w-2/3 border border-emerald-600 dark:border-emerald-800 rounded">
-                                        <p>{{ recipe.pivot.notes }}</p>
+                                        <p class="wrap-break-word">{{ recipe.pivot.notes }}</p>
                                     </div>
                                     <div class="flex flex-row items-center gap-2">
                                         <Button v-if="canEdit" type="submit" variant="submit">Gem</Button>

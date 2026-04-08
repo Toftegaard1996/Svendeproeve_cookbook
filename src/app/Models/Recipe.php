@@ -19,11 +19,14 @@ class Recipe extends Model
         'base_amount',
         'guide',
         'country',
+        'image_name',
     ];
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)
+            ->withPivot('notes')
+            ->withTimestamps();
     }
 
     public function categories(): BelongsToMany
