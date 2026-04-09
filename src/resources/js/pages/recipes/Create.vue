@@ -21,6 +21,7 @@ const form = useForm({
     base_amount: '',
     guide: '',
     country: '',
+    image_name: null,
     notes: '',
     categories: [],
     courses: [],
@@ -116,7 +117,7 @@ function submit() {
 
                                 <div class="grid gap-2 mt-6">
                                     <Label for="image_name">Tilføj billede (coming soon)</Label>
-                                    <Input type="file" id="image_name"/>
+                                    <Input type="file" @input="form.image_name = $event.target.files[0]" id="image_name" v-model="form.image_name"/>
                                 </div>
                                 <Button type="submit" variant="submit" class="mt-6">Gem opskrift</Button>
                             </Form>

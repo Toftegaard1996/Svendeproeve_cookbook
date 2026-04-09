@@ -29,6 +29,7 @@ export type Recipe = {
     base_amount: number;
     guide: string;
     country: string;
+    image_name: string;
     category_recipe?: Category_Recipe;
     course_recipe?: Course_Recipe;
     ingredient_recipe?: Ingredient_Recipe;

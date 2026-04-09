@@ -129,7 +129,8 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     <div v-if="!recipe.ingredients">Ingen ingredienser tilføjet</div>
                                 </div>
                                 <div class="border border-red-500 w-1/3">
-                                    <Image class="w-full h-44" />
+                                    <Image v-if="!recipe.image_name" class="w-full h-44" />
+                                    <img v-if="recipe.image_name" :src="`/storage/${recipe.image_name}`" alt="Billede af retten">
                                 </div>
                             </div>
                             <div v-if="recipe.guide" class="mt-6 w-2/3">

@@ -15,6 +15,8 @@ use Gotenberg\Stream;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class RecipeController extends Controller
@@ -46,6 +48,10 @@ class RecipeController extends Controller
      */
     public function store(StoreRecipeRequest $request)
     {
+        $imageName = null;
+        if (!empty($request->file('image_name'))) {
+            $imageName = Storage::disk('public')->putFile('recipeImg', $request->file('image_name'), 'public');
+        }
         $recipe = Recipe::create([
             'name' => $request->input('name'),
             'description' => $request->input('description') ?? null,
@@ -53,6 +59,7 @@ class RecipeController extends Controller
             'base_amount' => $request->input('base_amount'),
             'guide' => $request->input('guide') ?? "",
             'country' => $request->input('country') ?? null,
+            'image_name' => $imageName,
         ]);
 
         //Create attachment between user and recipe
@@ -64,10 +71,13 @@ class RecipeController extends Controller
         if (!empty($request->input('categories'))) {
             $recipe->categories()->sync($request->input('categories'));
         }
+
+        //Create attachment between recipe and courses
         if (!empty($request->input('courses'))) {
             $recipe->courses()->sync($request->input('courses'));
         }
 
+        //Create attachment between recipe and ingredients
         if (!empty($request->input('ingredients'))) {
             foreach ($request->input('ingredients') as $ingredient) {
                 $recipe->ingredients()->attach($ingredient['ingredient'], [
