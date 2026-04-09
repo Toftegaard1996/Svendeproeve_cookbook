@@ -11,7 +11,8 @@ import AppLayout from "@/layouts/AppLayout.vue";
 import {index as category_index} from "@/routes/category";
 import { index as dashboard } from '@/routes/recipe';
 import { store } from '@/routes/recipe'
-import type {BreadcrumbItem, Category, Course} from "@/types";
+import type {BreadcrumbItem, Category, Course, Ingredient} from "@/types";
+import IngredientsInput from "@/components/ui/input/IngredientsInput.vue";
 
 const form = useForm({
     name: '',
@@ -20,13 +21,16 @@ const form = useForm({
     base_amount: '',
     guide: '',
     country: '',
+    notes: '',
     categories: [],
     courses: [],
+    ingredients: [],
 })
 
 defineProps<{
     categories: Category[],
-    courses: Course[]
+    courses: Course[],
+    ingredients: Ingredient[]
 }>()
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -77,11 +81,9 @@ function submit() {
                                     <Input id="cook_time" v-model="form.cook_time" placeholder="90"/>
                                     <InputError :message="form.errors.cook_time" />
                                 </div>
-                                <!-- TODO: Add ingredients -->
                                 <div class="grid gap-2 mt-6">
                                     <Label for="ingredients">Ingredienser</Label>
-<!--                                    <Input id="base_amount" v-model="form.base_amount" placeholder="4"/>-->
-<!--                                    <InputError :message="form.errors.base_amount" />-->
+                                    <IngredientsInput id="ingredients" v-model="form.ingredients" :items="ingredients" />
                                 </div>
                                 <div class="grid gap-2 mt-6">
                                     <Label for="base_amount">Antal personer</Label>

@@ -60,11 +60,21 @@ class RecipeController extends Controller
             'notes' => $request->input('notes'),
         ]);
 
+        //Create attachment between recipe and categories
         if (!empty($request->input('categories'))) {
             $recipe->categories()->sync($request->input('categories'));
         }
         if (!empty($request->input('courses'))) {
             $recipe->courses()->sync($request->input('courses'));
+        }
+
+        if (!empty($request->input('ingredients'))) {
+            foreach ($request->input('ingredients') as $ingredient) {
+                $recipe->ingredients()->attach($ingredient['ingredient'], [
+                    'measurements' => $ingredient['measurement'] ?? null,
+                    'unit' => $ingredient['unit'] ?? null,
+                ]);
+            }
         }
 
         Feedback::notification('Opskrift oprettet');
