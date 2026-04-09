@@ -48,7 +48,7 @@ class RecipeController extends Controller
      */
     public function store(StoreRecipeRequest $request)
     {
-        $imageName = null;
+        $imageName = '';
         if (!empty($request->file('image_name'))) {
             $imageName = Storage::disk('public')->putFile('recipeImg', $request->file('image_name'), 'public');
         }

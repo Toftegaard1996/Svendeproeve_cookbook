@@ -145,7 +145,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 <!--                                        <InputError :message="errors.notes" />-->
                                     </div>
                                     <div v-if="!canEdit" class="p-2 mt-2 w-2/3 border border-emerald-600 dark:border-emerald-800 rounded">
-                                        <p class="wrap-break-word">{{ recipe.pivot.notes }}</p>
+                                        <p class="wrap-break-word">{{ recipe.pivot.notes ?? 'Tilføj noter ved at klikke rediger' }}</p>
                                     </div>
                                     <div class="flex flex-row items-center gap-2">
                                         <Button v-if="canEdit" type="submit" variant="submit">Gem</Button>

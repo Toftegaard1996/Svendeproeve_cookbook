@@ -21,7 +21,7 @@ const form = useForm({
     base_amount: '',
     guide: '',
     country: '',
-    image_name: null,
+    image_name: '',
     notes: '',
     categories: [],
     courses: [],

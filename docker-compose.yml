@@ -4,6 +4,7 @@ services:
     volumes:
       - ./src:/app:cached
       - ./docker/vhost.conf:/etc/apache2/sites-available/000-default.conf
+      - ./src/storage/app/public:/app/public/storage
     ports:
       - "1313:80"
   db:

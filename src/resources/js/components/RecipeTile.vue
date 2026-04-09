@@ -12,7 +12,8 @@ defineProps<{
     <div v-for="item in recipes" :key="item.id" class="text-center border-4 border-emerald-700 rounded-lg p-2 shadow-md">
         <Link :href="show(item.id)" >
             <div class="w-full mb-4">
-                <Image class="mx-auto h-24 w-24"/>
+                <Image v-if="!item.image_name" class="mx-auto h-24 w-24"/>
+                <img v-if="item.image_name" :src="`/storage/${item.image_name}`" alt="Billede af retten">
             </div>
             <p class="font-bold">{{ item.name }}</p>
             <p>{{ item.description }}</p>
