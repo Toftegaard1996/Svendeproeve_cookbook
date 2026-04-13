@@ -11,14 +11,18 @@ class Pdf
 {
     public static function render(string $html, string $imageName): ResponseInterface
     {
+        $path = '';
         if ($imageName == '') {
+            $path = "img/";
             $imageName = 'background2.webp';
+        } else {
+            $path = "storage/recipeImg/";
         }
         $pdf = Gotenberg::chromium("http://gotenberg:3000")
             ->pdf()
             ->paperSize(8.27, 11.7)
             ->assets(Stream::path(public_path('pdfImg/clock.svg')))
-            ->assets(Stream::path(public_path('img/' . $imageName)))
+            ->assets(Stream::path(public_path($path . $imageName)))
             ->html(Stream::string('recipe.pdf', $html));
 
         return Gotenberg::send($pdf);

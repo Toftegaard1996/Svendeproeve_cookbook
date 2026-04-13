@@ -9,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-    <div v-for="item in recipes" :key="item.id" class="text-center border-4 border-emerald-700 rounded-lg p-2 shadow-md">
+    <div v-for="item in recipes" :key="item.id" class="text-center border-4 border-emerald-600 dark:border-emerald-700 rounded-lg p-2 shadow-md">
         <Link :href="show(item.id)" >
             <div class="w-full mb-4">
                 <Image v-if="!item.image_name" class="mx-auto h-24 w-24"/>
@@ -17,17 +17,20 @@ defineProps<{
             </div>
             <p class="font-bold">{{ item.name }}</p>
             <p>{{ item.description }}</p>
-            <div class="flex flex-row justify-end w-full mt-2">
+            <div class="flex flex-row justify-between w-full mt-2">
+                <div class="text-left text-sm italic p-1 w-2/3 text-gray-600 dark:text-gray-300">
+                    <div>{{item.country}}</div>
+                </div>
                 <div class="flex flex-row">
                     <Clock class="w-5"/>
                     <p class="ml-2">{{ item.cook_time }} min.</p>
                 </div>
             </div>
             <div class="grid gap-2 grid-cols-3 mt-4">
-                <div v-for="course in item.courses" class="border border-gray-400 text-sm text-gray-300 rounded">
+                <div v-for="course in item.courses" class="border border-gray-400 text-sm text-gray-600 dark:text-gray-300 rounded">
                     {{ course.name }}
                 </div>
-                <div v-for="category in item.categories" class="border border-gray-400 text-sm text-gray-300 rounded">
+                <div v-for="category in item.categories" class="border border-gray-400 text-sm text-gray-600 dark:text-gray-300 rounded">
                     {{ category.name }}
                 </div>
             </div>

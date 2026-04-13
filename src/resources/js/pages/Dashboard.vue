@@ -2,12 +2,17 @@
 import {Head} from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import {index as dashboard, create} from '@/routes/recipe';
-import type {BreadcrumbItem, Recipe} from '@/types';
+import type {BreadcrumbItem, Category, Course, Recipe} from '@/types';
 import RecipeTile from "@/components/RecipeTile.vue";
 import TextLink from "@/components/TextLink.vue";
+import {RadioGroup, RadioGroupLabel, RadioGroupOption} from "@headlessui/vue";
+import {computed, ref, watch} from "vue";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 
-defineProps<{
+const props = defineProps<{
     recipes: Recipe[]
+    categories: Category[]
+    courses: Course
 }>()
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -16,6 +21,29 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: dashboard(),
     },
 ];
+
+const Options = [
+    { name: 'Overskrift', inStock: true },
+    { name: 'Arbejdstid', inStock: true },
+    { name: 'Land', inStock: true },
+]
+
+const chosenSort = ref('')
+
+watch(chosenSort, async (sortedRecipe) => {
+    console.log(sortedRecipe)
+    switch (sortedRecipe.name) {
+        case 'Overskrift':
+            props.recipes.sort((a, b) => (a.name < b.name ? -1 : 1));
+            break
+        case 'Arbejdstid':
+            props.recipes.sort((a, b) => (a.cook_time < b.cook_time ? -1 : 1));
+            break
+        case 'Land':
+            props.recipes.sort((a, b) => (a.country < b.country ? -1 : 1));
+            break
+    }
+})
 </script>
 
 <template>
@@ -31,6 +59,49 @@ const breadcrumbs: BreadcrumbItem[] = [
                         class="overflow-hidden bg-gray-100 dark:bg-gray-700 rounded-lg p-6"
                     >
                         <h2 class="text-xl font-semibold mb-4">Dine gemte opskrifter</h2>
+                        <div class="flex flex-col md:flex-row items-center mb-2">
+                            <p class="ml-2 mr-4">Sorter efter:</p>
+                            <RadioGroup v-model="chosenSort" class="mb-2">
+                                <div class="grid grid-cols-3 gap-3 sm:grid-cols-6">
+                                    <RadioGroupOption
+                                        v-for="option in Options"
+                                        :key="option.name"
+                                        v-slot="{ checked }"
+                                        as="template"
+                                        :value="option"
+                                        :disabled="!option.inStock"
+                                    >
+                                        <div
+                                            :class="[
+                                                  option.inStock
+                                                    ? 'cursor-pointer focus:outline-none'
+                                                    : 'opacity-25 cursor-not-allowed',
+                                                    checked
+                                                    ? 'bg-emerald-500/75 hover:bg-emerald-600/75 dark:bg-emerald-800 border-transparent dark:hover:bg-emerald-900'
+                                                    : 'hover:bg-gray-200 dark:hover:bg-accent',
+                                                    'border rounded-md py-2 px-2 flex items-center justify-center text-xs font-semibold uppercase shadow-md sm:flex-1',
+                                                ]"
+                                        >
+                                            <RadioGroupLabel as="p">
+                                                {{ option.name }}
+                                            </RadioGroupLabel>
+                                        </div>
+                                    </RadioGroupOption>
+                                </div>
+                            </RadioGroup>
+                        </div>
+<!--                        <div class="mb-2">--> <!-- TODO: for filtering -->
+<!--                            <Select v-model="chosenSort">-->
+<!--                                <SelectTrigger>-->
+<!--                                    <SelectValue placeholder="Vælg en kategori"/>-->
+<!--                                </SelectTrigger>-->
+<!--                                <SelectContent>-->
+<!--                                    <SelectItem v-for="item in categories" :key="item.id" :value="item.id">-->
+<!--                                        {{ item.name }}-->
+<!--                                    </SelectItem>-->
+<!--                                </SelectContent>-->
+<!--                            </Select>-->
+<!--                        </div>-->
                         <div v-if="recipes" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                             <RecipeTile :recipes="recipes"/>
                         </div>

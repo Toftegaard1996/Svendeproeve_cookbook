@@ -27,7 +27,9 @@ class RecipeController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Dashboard', [
-            'recipes' => $request->user()->recipes()->with('courses')->with('categories')->with('ingredients')->get()
+            'recipes' => $request->user()->recipes()->with('courses')->with('categories')->with('ingredients')->get(),
+            'categories' => Category::all(),
+            'courses' => Course::all(),
         ]);
     }
 
@@ -148,8 +150,8 @@ class RecipeController extends Controller
             ->with(['courses', 'categories', 'ingredients'])
             ->where('recipe_id', $recipe->id)
             ->firstOrFail();
-        $imageName = $recipe->image_name ?? '';
-        $pdf = Pdf::render(view('pdf.index', ['recipe' => $recipeWithPivots]), $imageName);
+        $imageName = $recipe->image_name ? Str::afterLast($recipe->image_name, '/' ) : '';
+        $pdf = Pdf::render(view('pdf.index', ['recipe' => $recipeWithPivots, 'thumbnail' => $imageName]), $imageName);
 
         return Pdf::response($pdf, $fileName);
     }

@@ -27,7 +27,7 @@
                 <?php
                     if (!empty($recipe->categories)) {
                         foreach ($recipe->categories as $item ) {?>
-                            <div class="border border-gray-400 py-1 px-2 text-sm text-gray-300 rounded">
+                            <div class="border border-gray-400 py-1 px-2 text-sm text-gray-400 rounded">
 
                                 <div>
                                     {{$item->name}}
@@ -45,7 +45,7 @@
                 <?php
                     if (!empty($recipe->courses)) {
                         foreach ($recipe->courses as $item ) {?>
-                        <div class="border border-gray-400 py-1 px-2 text-sm text-gray-300 rounded">
+                        <div class="border border-gray-400 py-1 px-2 text-sm text-gray-400 rounded">
                             <div>
                                 {{$item->name}}
                             </div>
@@ -72,7 +72,7 @@
                 <?php } ?>
             </div>
             <div class="border border-red-500 w-1/2">
-                <img src="{{$recipe->image_name}}" alt="" class="w-full" ></img>
+                <img src="{{$thumbnail}}" alt="" class="w-full" />
             </div>
         </div>
         <div v-if="recipe.guide" class="mt-6">
