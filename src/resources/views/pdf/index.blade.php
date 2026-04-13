@@ -15,7 +15,7 @@
         </div>
         <p class="mt-2">Oprindelsesland: {{$recipe->country}}</p>
         <div class="my-3">
-            <p>Til {{$recipe->base_amount}} personer</p>
+            <p>Til {{$recipe->base_amount + $addedOrRemoved}} personer</p>
         </div>
         <div class="flex flex-row">
             <img src="clock.svg" class="mr-2" alt=""/>

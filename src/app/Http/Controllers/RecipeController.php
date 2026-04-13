@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Number;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -143,7 +144,7 @@ class RecipeController extends Controller
         return redirect()->route('recipe.index');
     }
 
-    public function convertToPdf(Request $request, Recipe $recipe): Response
+    public function convertToPdf(Request $request, Recipe $recipe, $addedOrRemoved): Response
     {
         $fileName = Pdf::nameConversion($recipe->name);
         $recipeWithPivots = $request->user()->recipes()
@@ -151,7 +152,7 @@ class RecipeController extends Controller
             ->where('recipe_id', $recipe->id)
             ->firstOrFail();
         $imageName = $recipe->image_name ? Str::afterLast($recipe->image_name, '/' ) : '';
-        $pdf = Pdf::render(view('pdf.index', ['recipe' => $recipeWithPivots, 'thumbnail' => $imageName]), $imageName);
+        $pdf = Pdf::render(view('pdf.index', ['recipe' => $recipeWithPivots, 'thumbnail' => $imageName, 'addedOrRemoved' => $addedOrRemoved]), $imageName);
 
         return Pdf::response($pdf, $fileName);
     }

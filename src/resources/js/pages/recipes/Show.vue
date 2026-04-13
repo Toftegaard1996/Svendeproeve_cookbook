@@ -42,6 +42,11 @@ const removePerson = () => {
     console.log(addedOrRemoved);
 }
 
+const regulateIngredient = (ingredient) => {
+    const onePersonIngredient = ingredient / baseAmount;
+    return ingredient + (onePersonIngredient * addedOrRemoved)
+}
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Din kogebog',
@@ -72,10 +77,10 @@ const breadcrumbs: BreadcrumbItem[] = [
                             </div>
                             <div class="flex flex-col-reverse md:flex-row md:justify-between items-center">
                                 <p>{{ recipe.description }}</p>
-                                <IconButton class="p-2 ml-4">
+                                <IconButton class=" ml-4">
                                     <template #icon>
-                                        <a :href="'/pdf/' + recipe.id" target="_blank" class="align-middle">
-                                            <Printer class="hover:cursor-pointer" />
+                                        <a :href="'/pdf/' + recipe.id + '/' + addedOrRemoved" target="_blank" class="align-middle">
+                                            <Printer class="hover:cursor-pointer m-1" />
                                         </a>
                                     </template>
                                 </IconButton>
@@ -124,7 +129,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 <div>
                                     <p>Ingredienser:</p>
                                     <div v-if="recipe.ingredients" v-for="item in recipe.ingredients">
-                                        {{ item.pivot.measurements }} {{ item.pivot.unit }} {{ item.name }}
+                                        {{ regulateIngredient(item.pivot.measurements) }} {{ item.pivot.unit }} {{ item.name }}
                                     </div>
                                     <div v-if="!recipe.ingredients">Ingen ingredienser tilføjet</div>
                                 </div>
