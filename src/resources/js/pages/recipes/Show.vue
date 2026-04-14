@@ -7,12 +7,13 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import type {BreadcrumbItem, Recipe} from "@/types";
 import {destroy, index as dashboard} from '@/routes/recipe';
-import {pdf} from "@/routes"
-import {Clock, Image, Printer, UserMinus, UserPlus, Plus} from 'lucide-vue-next';
-import {ref} from "vue";
+import {Clock, Image, Printer, UserMinus, UserPlus, Plus, Play, Square, Pause, StepForward} from 'lucide-vue-next';
+import {ref, shallowRef} from "vue";
 import RecipeController from "@/actions/App/Http/Controllers/RecipeController";
 import DeleteModal from "@/components/DeleteModal.vue";
 import IconButton from "@/components/IconButton.vue";
+import {useCountdown} from "@vueuse/core";
+import TimeIsUpModal from "@/components/TimeIsUpModal.vue";
 
 const props = defineProps<{
     recipe: Recipe
@@ -21,30 +22,44 @@ const props = defineProps<{
 let recipeToBeDeleted:Recipe;
 const canEdit = ref(false);
 const openDelete = ref(false);
+const openTimeUp = ref(false);
 
 function openDeleteModal(item: Recipe) {
     openDelete.value = true;
-
     recipeToBeDeleted = item;
-
 }
 
 const baseAmount = props.recipe.base_amount;
-let addedOrRemoved = 0;
+let addedOrRemoved = ref(0);
 
 const addPerson = () => {
-    addedOrRemoved++;
-    console.log(addedOrRemoved);
+    addedOrRemoved.value++;
 }
 
 const removePerson = () => {
-    addedOrRemoved--;
-    console.log(addedOrRemoved);
+    addedOrRemoved.value--;
 }
 
 const regulateIngredient = (ingredient) => {
     const onePersonIngredient = ingredient / baseAmount;
-    return ingredient + (onePersonIngredient * addedOrRemoved)
+    return Math.round(ingredient + (onePersonIngredient * addedOrRemoved.value))
+}
+
+const countdownSeconds = shallowRef(500)
+const isCounting  = ref(false)
+const { remaining, start, stop, pause, resume } = useCountdown(countdownSeconds, {
+    onComplete() {
+        isCounting.value = false
+        openTimeUp.value = true;
+    },
+    onTick() {
+
+    }
+})
+
+function startCountdown() {
+    start(countdownSeconds)
+    isCounting.value = true
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -92,7 +107,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                         <UserMinus class="h-4 w-4"/>
                                     </template>
                                 </IconButton>
-                                <p>Til {{ recipe.base_amount }} personer</p>
+                                <p>Til {{ recipe.base_amount + addedOrRemoved }} personer</p>
                                 <IconButton @click="addPerson">
                                     <template #icon>
                                         <UserPlus class="h-4 w-4"/>
@@ -102,6 +117,19 @@ const breadcrumbs: BreadcrumbItem[] = [
                             <div class="flex flex-row">
                                 <Clock class="mr-2"/>
                                 <p>Arbejdestid {{ recipe.cook_time }} min.</p>
+                            </div>
+                            <div class="mt-3">
+                                <p>Timer:</p>
+                                <div class="border-2 border-gray-800 w-min p-1 rounded">
+                                    <p v-if="isCounting" class="w-48 my-1 px-2">{{remaining}}</p>
+                                    <Input v-if="!isCounting" v-model="countdownSeconds" type="number" class="w-48 my-2" />
+                                    <div class="flex flex-row gap-2">
+                                        <Button variant="outline" @click="startCountdown"><Play/></Button>
+                                        <Button variant="outline" @click="stop"><Square/></Button>
+                                        <Button variant="outline" @click="pause"><Pause/></Button>
+                                        <Button variant="outline" @click="resume"><StepForward/></Button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="my-3">
                                 <p class="mb-1">Kategorier:</p>
@@ -133,7 +161,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     </div>
                                     <div v-if="!recipe.ingredients">Ingen ingredienser tilføjet</div>
                                 </div>
-                                <div class="border border-red-500 w-1/3">
+                                <div class="border border-gray-800 w-1/3">
                                     <Image v-if="!recipe.image_name" class="w-full h-44" />
                                     <img v-if="recipe.image_name" :src="`/storage/${recipe.image_name}`" alt="Billede af retten">
                                 </div>
@@ -180,5 +208,12 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </Link>
             </template>
         </DeleteModal>
+        <TimeIsUpModal :open="openTimeUp" @close="openTimeUp = false">
+            <template #action>
+                <Button variant="submit" @click="openTimeUp = false">
+                    Forsæt
+                </Button>
+            </template>
+        </TimeIsUpModal>
     </AppLayout>
 </template>
