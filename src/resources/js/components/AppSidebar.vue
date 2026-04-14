@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { LayoutGrid, Pencil, BookOpenText, List } from 'lucide-vue-next';
+import { LayoutGrid, Pencil, BookOpenText, List, Lightbulb } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -19,6 +19,7 @@ import type { NavItem } from '@/types';
 import { index as dashboard } from "@/routes/recipe"
 import { index as category_index }  from "@/routes/category";
 import { create as recipe_create } from "@/routes/recipe";
+import { inspiration } from "@/routes"
 import Notification from "@/components/Notification.vue";
 
 const mainNavItems: NavItem[] = [
@@ -46,6 +47,11 @@ const mainNavItems: NavItem[] = [
         title: 'Register',
         href: '',
         icon: List,
+    },
+    {
+        title: 'Inspiration',
+        href: inspiration(),
+        icon: Lightbulb,
     },
 ];
 
