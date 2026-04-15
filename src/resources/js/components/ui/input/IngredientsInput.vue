@@ -1,8 +1,23 @@
 <script setup lang="ts">
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ref, watch } from 'vue';
-import { X, Plus } from 'lucide-vue-next';
+import {computed, ref, watch} from 'vue';
+import { X, Plus, CheckIcon, ChevronDown } from 'lucide-vue-next';
 import Input from "@/components/ui/input/Input.vue";
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from '@/components/ui/command'
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover'
+import {Button} from "@/components/ui/button";
+import {cn} from "@/lib/utils";
 
 const props = defineProps<{
     items: Array
@@ -18,6 +33,7 @@ const model = defineModel<Ingredient[]>({
     default: []
 })
 
+const open = ref(false)
 const measurementTag = ref('')
 const unitTag = ref('')
 const ingredientTag = ref('')
@@ -39,20 +55,9 @@ const removeItem = (id) => {
     model.value = model.value.filter(i => i !== id)
 }
 
-const searchIngredientFunction = () => {
-    const input = document.getElementById("searchIngredient");
-    const filter = input.value.toUpperCase();
-    const ingredientDropdown = document.getElementById("ingredientSelect");
-    const selectItem = ingredientDropdown.getElementsByTagName("p");
-    let textValue
-    for (let i = 0; i < selectItem.length; i++) {
-        textValue = selectItem[i].textContent || selectItem[i].innerText;
-        if (textValue.toUpperCase().indexOf(filter) > -1) {
-            selectItem[i].style.display = "";
-        } else {
-            selectItem[i].style.display = "none";
-        }
-    }
+function selectIngredient(selectedValue: string) {
+    ingredientTag.value = selectedValue === ingredientTag.value ? '' : selectedValue
+    open.value = false
 }
 
 </script>
@@ -71,17 +76,45 @@ const searchIngredientFunction = () => {
                     </SelectItem>
                 </SelectContent>
             </Select>
-            <Select v-model="ingredientTag" class="hover:cursor-pointer" id="ingredientSelect">
-                <SelectTrigger>
-                    <SelectValue placeholder="Gulerødder"/>
-                </SelectTrigger>
-                <SelectContent>
-                    <Input type="text" placeholder="Søg .." id="searchIngredient" @change="searchIngredientFunction()" class="mb-1"/>
-                    <SelectItem v-for="item in items" :key="item.id" :value="item.id" id="ingredientSelect">
-                        <p id="itemName">{{ item.name }}</p>
-                    </SelectItem>
-                </SelectContent>
-            </Select>
+            <Popover v-model:open="open" v-model="ingredientTag">
+                <PopoverTrigger as-child>
+                    <Button
+                        variant="outline"
+                        role="combobox"
+                        :aria-expanded="open"
+                        class="w-50 justify-between"
+                    >
+                        {{ idToName(ingredientTag) || "Vælg ingredient..." }}
+                        <ChevronDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent class="w-50 p-0" v-model="ingredientTag">
+                    <Command>
+                        <CommandInput placeholder="Søg ingredient..." />
+                        <CommandList>
+                            <CommandEmpty>Ingen ingredienser fundet.</CommandEmpty>
+                            <CommandGroup>
+                                <CommandItem
+                                    v-for="item in items"
+                                    :key="item.id"
+                                    :value="item.id"
+                                    @select="(ev) => {
+                                        selectIngredient(ev.detail.value as string)
+                                    }"
+                                >
+                                    {{ item.name }}
+                                    <CheckIcon
+                                        :class="cn(
+                                          'mr-2 h-4 w-4',
+                                          ingredientTag === item.id ? 'opacity-100' : 'opacity-0',
+                                        )"
+                                    />
+                                </CommandItem>
+                            </CommandGroup>
+                        </CommandList>
+                    </Command>
+                </PopoverContent>
+            </Popover>
             <div @click="addItem(measurementTag, unitTag, ingredientTag)" class="border-2 border-gray-800 p-1 rounded flex items-center hover:cursor-pointer hover:bg-accent">
                 <Plus class="h-4"/>
             </div>
