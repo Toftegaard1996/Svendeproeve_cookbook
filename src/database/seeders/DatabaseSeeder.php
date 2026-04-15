@@ -31,7 +31,7 @@ Nulla eleifend, diam in eleifend porta, felis sem dictum ligula, vitae facilisis
             'email' => 'test@example.com',
         ]);
 
-        $recipes = Recipe::factory(50)->create();
+        $recipes = Recipe::factory(24)->create();
         $validRecipe = Recipe::factory()->create([
             'name' => 'Lasagne',
             'description' => 'Verdens bedste lasagne',
@@ -40,7 +40,7 @@ Nulla eleifend, diam in eleifend porta, felis sem dictum ligula, vitae facilisis
             'guide' => $guide,
         ]);
         $ingredients = Ingredient::factory(10)->create();
-        $courses = Course::factory(10)->create();
+        $courses = Course::factory(3)->create();
         $categories = Category::factory(10)->create();
 
         foreach ($recipes as $recipe) {

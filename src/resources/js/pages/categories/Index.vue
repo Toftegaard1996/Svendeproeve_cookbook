@@ -53,7 +53,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                             <p>Kategorien skal være unik</p>
                             <Form v-bind="CategoryController.store.form()"
                                   :reset-on-success="['name']"
-                                  class="w-full p-8"
+                                  class="w-full pt-8 md:p-8"
                                   v-slot="{ errors, processing, recentlySuccessful }"
                             >
                                 <div class="grid gap-2">
@@ -64,7 +64,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 <Button type="submit" variant="submit" class="mt-4">Gem kategori</Button>
                             </Form>
                             <h2 class="text-xl font-semibold border-b border-gray-900 mt-10 mb-4">Kategorier der er registreret</h2>
-                            <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-6">
+                            <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
                                 <div
                                     v-for="row in categories"
                                     :key="row.id"

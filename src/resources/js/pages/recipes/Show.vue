@@ -90,27 +90,27 @@ const breadcrumbs: BreadcrumbItem[] = [
                             <div>
                                 <h2 class="text-xl font-semibold border-b border-gray-900 mb-4">{{ recipe.name }}</h2>
                             </div>
-                            <div class="flex flex-col-reverse md:flex-row md:justify-between items-center">
-                                <p>{{ recipe.description }}</p>
-                                <IconButton class=" ml-4">
-                                    <template #icon>
-                                        <a :href="'/pdf/' + recipe.id + '/' + addedOrRemoved" target="_blank" class="align-middle">
+                            <div class="flex flex-col md:flex-row md:justify-between items-start md:items-center">
+                                <p class="md:w-2/3">{{ recipe.description }}</p>
+                                <a :href="'/pdf' + recipe.id + '/' + addedOrRemoved" target="_blank" class="align-middle mt-3 md:ml-4">
+                                    <IconButton>
+                                        <template #icon>
                                             <Printer class="hover:cursor-pointer m-1" />
-                                        </a>
-                                    </template>
-                                </IconButton>
+                                        </template>
+                                    </IconButton>
+                                </a>
                             </div>
                             <p class="mt-2">Oprindelsesland: {{ recipe.country }}</p>
-                            <div class="flex flex-row gap-2 my-3">
+                            <div class="flex flex-row gap-2 my-3 items-center">
                                 <IconButton @click="removePerson">
                                     <template #icon>
-                                        <UserMinus class="h-4 w-4"/>
+                                        <UserMinus class="h-5 w-5"/>
                                     </template>
                                 </IconButton>
                                 <p>Til {{ recipe.base_amount + addedOrRemoved }} personer</p>
                                 <IconButton @click="addPerson">
                                     <template #icon>
-                                        <UserPlus class="h-4 w-4"/>
+                                        <UserPlus class="h-5 w-5"/>
                                     </template>
                                 </IconButton>
                             </div>
@@ -133,22 +133,22 @@ const breadcrumbs: BreadcrumbItem[] = [
                             </div>
                             <div class="my-3">
                                 <p class="mb-1">Kategorier:</p>
-                                <div class="flex flex-row gap-2">
-                                    <div v-for="item in recipe.categories" class="border border-gray-400 py-1 px-2 text-sm text-gray-300 rounded">
-                                        <div>{{item.name}}</div>
+                                <div class="flex flex-row flex-wrap gap-2">
+                                    <div v-for="item in recipe.categories" class="border border-gray-400 py-1 px-2 text-sm text-gray-700 dark:text-gray-300 rounded">
+                                        <div class="">{{item.name}}</div>
                                     </div>
-<!--                                    <div class="border border-gray-400 p-1 text-sm text-gray-300 rounded">-->
+<!--                                    <div class="border border-gray-400 p-1 text-sm text-gray-700 dark:text-gray-300 rounded">-->
 <!--                                        <Plus class="h-5"/>-->
 <!--                                    </div>-->
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <p class="mb-1">Ret:</p>
-                                <div class="flex flex-row gap-2">
-                                    <div v-for="item in recipe.courses" class="border border-gray-400 py-1 px-2 text-sm text-gray-300 rounded">
+                                <div class="flex flex-row flex-wrap gap-2">
+                                    <div v-for="item in recipe.courses" class="border border-gray-400 py-1 px-2 text-sm text-gray-700 dark:text-gray-300 rounded">
                                         <div>{{item.name}}</div>
                                     </div>
-<!--                                    <div class="border border-gray-400 p-1 text-sm text-gray-300 rounded">-->
+<!--                                    <div class="border border-gray-400 p-1 text-sm text-gray-700 dark:text-gray-300 rounded">-->
 <!--                                        <Plus class="h-5"/>-->
 <!--                                    </div>-->
                                 </div>
@@ -161,9 +161,9 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     </div>
                                     <div v-if="!recipe.ingredients">Ingen ingredienser tilføjet</div>
                                 </div>
-                                <div class="border border-gray-800 w-1/3">
-                                    <Image v-if="!recipe.image_name" class="w-full h-44" />
-                                    <img v-if="recipe.image_name" :src="`/storage/${recipe.image_name}`" alt="Billede af retten">
+                                <div class="border border-gray-800  md:w-1/3 mb-3 items-center h-80">
+                                    <Image v-if="!recipe.image_name" class="w-full h-full" />
+                                    <img v-if="recipe.image_name" :src="`/storage/${recipe.image_name}`" alt="Billede af retten" class="w-full h-full">
                                 </div>
                             </div>
                             <div v-if="recipe.guide" class="mt-6 w-2/3">
@@ -177,7 +177,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                         <Input v-if="canEdit" id="notes" name="notes" :default-value="recipe.pivot.notes"/>
 <!--                                        <InputError :message="errors.notes" />-->
                                     </div>
-                                    <div v-if="!canEdit" class="p-2 mt-2 w-2/3 border border-emerald-600 dark:border-emerald-800 rounded">
+                                    <div v-if="!canEdit" class="p-2 mt-2 md:w-2/3 border border-emerald-600 dark:border-emerald-800 rounded">
                                         <p class="wrap-break-word">{{ recipe.pivot.notes ?? 'Tilføj noter ved at klikke rediger' }}</p>
                                     </div>
                                     <div class="flex flex-row items-center gap-2">
@@ -186,7 +186,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     </div>
                                 </Form>
                             </div>
-                            <div class="flex justify-end">
+                            <div class="flex md:justify-end mt-5 md:mt-0">
                                 <Button variant="destructive" class="" @click="openDeleteModal(recipe)">Fjern opskrift fra kogebog</Button>
                             </div>
 
@@ -201,8 +201,8 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <br>Du kan altid gemme den igen, men dine noter vil gå tabt
             </template>
             <template #action>
-                <Link :href="destroy(recipe.id)" variant="destructive">
-                    <Button variant="destructive">
+                <Link :href="destroy(recipe.id)" variant="destructive" class="w-full sm:w-auto">
+                    <Button variant="destructive" class="w-full">
                         Fjern opskrift
                     </Button>
                 </Link>

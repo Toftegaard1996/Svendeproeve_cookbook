@@ -39,12 +39,28 @@ const removeItem = (id) => {
     model.value = model.value.filter(i => i !== id)
 }
 
+const searchIngredientFunction = () => {
+    const input = document.getElementById("searchIngredient");
+    const filter = input.value.toUpperCase();
+    const ingredientDropdown = document.getElementById("ingredientSelect");
+    const selectItem = ingredientDropdown.getElementsByTagName("p");
+    let textValue
+    for (let i = 0; i < selectItem.length; i++) {
+        textValue = selectItem[i].textContent || selectItem[i].innerText;
+        if (textValue.toUpperCase().indexOf(filter) > -1) {
+            selectItem[i].style.display = "";
+        } else {
+            selectItem[i].style.display = "none";
+        }
+    }
+}
+
 </script>
 
 <template>
     <div>
-        <div class="flex flex-row gap-2">
-            <Input v-model="measurementTag" placeholder="400" class="w-1/3"/>
+        <div class="flex flex-row flex-wrap gap-2">
+            <Input v-model="measurementTag" placeholder="400" class="w-16"/>
             <Select v-model="unitTag" class="hover:cursor-pointer">
                 <SelectTrigger>
                     <SelectValue placeholder="gram"/>
@@ -55,13 +71,14 @@ const removeItem = (id) => {
                     </SelectItem>
                 </SelectContent>
             </Select>
-            <Select v-model="ingredientTag" class="hover:cursor-pointer">
+            <Select v-model="ingredientTag" class="hover:cursor-pointer" id="ingredientSelect">
                 <SelectTrigger>
                     <SelectValue placeholder="Gulerødder"/>
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem v-for="item in items" :key="item.id" :value="item.id">
-                        {{ item.name }}
+                    <Input type="text" placeholder="Søg .." id="searchIngredient" @change="searchIngredientFunction()" class="mb-1"/>
+                    <SelectItem v-for="item in items" :key="item.id" :value="item.id" id="ingredientSelect">
+                        <p id="itemName">{{ item.name }}</p>
                     </SelectItem>
                 </SelectContent>
             </Select>

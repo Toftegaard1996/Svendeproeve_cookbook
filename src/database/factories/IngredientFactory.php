@@ -18,7 +18,7 @@ class IngredientFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => $this->faker->unique()->randomElement(['Gulerødder', 'Kartofler', 'Oksekød', 'Gris', 'Fiskefilet', 'Mel', 'Sukker', 'Mælk', 'Pasta', 'Tomat']),
         ];
     }
 }

@@ -65,7 +65,7 @@ function submit() {
                         <div class="p-6">
                             <h2 class="text-xl font-semibold border-b border-gray-900">Tilføj opskrift</h2>
                             <Form @submit.prevent="submit"
-                                  class="w-full p-8"
+                                  class="w-full mt-4 xl:px-8"
                             >
                                 <div class="grid gap-2">
                                     <Label for="name">Navn på opskriften</Label>

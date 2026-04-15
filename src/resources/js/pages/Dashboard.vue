@@ -59,10 +59,10 @@ watch(chosenSort, async (sortedRecipe) => {
                         class="overflow-hidden bg-gray-100 dark:bg-gray-700 rounded-lg p-6"
                     >
                         <h2 class="text-xl font-semibold mb-4">Dine gemte opskrifter</h2>
-                        <div class="flex flex-col md:flex-row items-center mb-2">
+                        <div class="flex flex-col lg:flex-row items-center mb-4">
                             <p class="ml-2 mr-4">Sorter efter:</p>
-                            <RadioGroup v-model="chosenSort" class="mb-2">
-                                <div class="grid grid-cols-3 gap-3 sm:grid-cols-6">
+                            <RadioGroup v-model="chosenSort">
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 2xl:grid-cols-6">
                                     <RadioGroupOption
                                         v-for="option in Options"
                                         :key="option.name"
@@ -102,7 +102,7 @@ watch(chosenSort, async (sortedRecipe) => {
 <!--                                </SelectContent>-->
 <!--                            </Select>-->
 <!--                        </div>-->
-                        <div v-if="recipes" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                        <div v-if="recipes" class="grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 ">
                             <RecipeTile :recipes="recipes"/>
                         </div>
                         <div v-if="!recipes">

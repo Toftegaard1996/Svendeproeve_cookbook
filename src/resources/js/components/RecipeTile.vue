@@ -18,7 +18,7 @@ defineProps<{
             <p class="font-bold">{{ item.name }}</p>
             <p>{{ item.description }}</p>
             <div class="flex flex-row justify-between w-full mt-2">
-                <div class="text-left text-sm italic p-1 w-2/3 text-gray-600 dark:text-gray-300">
+                <div class="text-left text-sm italic p-1 w-1/2 text-gray-600 dark:text-gray-300">
                     <div>{{item.country}}</div>
                 </div>
                 <div class="flex flex-row">
