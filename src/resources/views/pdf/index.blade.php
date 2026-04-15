@@ -61,9 +61,11 @@
                 <p>Ingredienser:</p>
                 <?php
                     if (!empty($recipe->ingredients)) {
-                        foreach ($recipe->ingredients as $item ) {?>
+                        foreach ($recipe->ingredients as $item ) {
+                            $onePersonIngredient = $item->pivot->measurements / $recipe->base_amount;
+                            $regulatedValue = round($item->pivot->measurements + ($onePersonIngredient * $addedOrRemoved))?>
                             <div>
-                                {{$item->pivot->measurements}} {{$item->pivot->unit}} {{$item->name}}
+                                {{$regulatedValue}} {{$item->pivot->unit}} {{$item->name}}
                             </div>
                 <?php
                         }
@@ -71,11 +73,11 @@
                         <div>Ingen ingredienser tilføjet</div>
                 <?php } ?>
             </div>
-            <div class="border border-red-500 w-1/2">
+            <div class="border border-gray-700 w-1/2">
                 <img src="{{$thumbnail}}" alt="" class="w-full" />
             </div>
         </div>
-        <div v-if="recipe.guide" class="mt-6">
+        <div class="mt-6">
             <p>Fremgangsmåde:</p>
             <div class="whitespace-pre-wrap">{{$recipe->guide}}</div>
         </div>

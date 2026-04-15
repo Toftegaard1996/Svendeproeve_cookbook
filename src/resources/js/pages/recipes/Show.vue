@@ -92,7 +92,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                             </div>
                             <div class="flex flex-col md:flex-row md:justify-between items-start md:items-center">
                                 <p class="md:w-2/3">{{ recipe.description }}</p>
-                                <a :href="'/pdf' + recipe.id + '/' + addedOrRemoved" target="_blank" class="align-middle mt-3 md:ml-4">
+                                <a :href="'/pdf/' + recipe.id + '/' + addedOrRemoved" target="_blank" class="align-middle mt-3 md:ml-4">
                                     <IconButton>
                                         <template #icon>
                                             <Printer class="hover:cursor-pointer m-1" />
@@ -100,68 +100,71 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     </IconButton>
                                 </a>
                             </div>
-                            <p class="mt-2">Oprindelsesland: {{ recipe.country }}</p>
-                            <div class="flex flex-row gap-2 my-3 items-center">
-                                <IconButton @click="removePerson">
-                                    <template #icon>
-                                        <UserMinus class="h-5 w-5"/>
-                                    </template>
-                                </IconButton>
-                                <p>Til {{ recipe.base_amount + addedOrRemoved }} personer</p>
-                                <IconButton @click="addPerson">
-                                    <template #icon>
-                                        <UserPlus class="h-5 w-5"/>
-                                    </template>
-                                </IconButton>
-                            </div>
-                            <div class="flex flex-row">
-                                <Clock class="mr-2"/>
-                                <p>Arbejdestid {{ recipe.cook_time }} min.</p>
-                            </div>
-                            <div class="mt-3">
-                                <p>Timer:</p>
-                                <div class="border-2 border-gray-800 w-min p-1 rounded">
-                                    <p v-if="isCounting" class="w-48 my-1 px-2">{{remaining}}</p>
-                                    <Input v-if="!isCounting" v-model="countdownSeconds" type="number" class="w-48 my-2" />
-                                    <div class="flex flex-row gap-2">
-                                        <Button variant="outline" @click="startCountdown"><Play/></Button>
-                                        <Button variant="outline" @click="stop"><Square/></Button>
-                                        <Button variant="outline" @click="pause"><Pause/></Button>
-                                        <Button variant="outline" @click="resume"><StepForward/></Button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="my-3">
-                                <p class="mb-1">Kategorier:</p>
-                                <div class="flex flex-row flex-wrap gap-2">
-                                    <div v-for="item in recipe.categories" class="border border-gray-400 py-1 px-2 text-sm text-gray-700 dark:text-gray-300 rounded">
-                                        <div class="">{{item.name}}</div>
-                                    </div>
-<!--                                    <div class="border border-gray-400 p-1 text-sm text-gray-700 dark:text-gray-300 rounded">-->
-<!--                                        <Plus class="h-5"/>-->
-<!--                                    </div>-->
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <p class="mb-1">Ret:</p>
-                                <div class="flex flex-row flex-wrap gap-2">
-                                    <div v-for="item in recipe.courses" class="border border-gray-400 py-1 px-2 text-sm text-gray-700 dark:text-gray-300 rounded">
-                                        <div>{{item.name}}</div>
-                                    </div>
-<!--                                    <div class="border border-gray-400 p-1 text-sm text-gray-700 dark:text-gray-300 rounded">-->
-<!--                                        <Plus class="h-5"/>-->
-<!--                                    </div>-->
-                                </div>
-                            </div>
                             <div class="flex flex-col-reverse md:flex-row justify-between mt-6">
-                                <div>
-                                    <p>Ingredienser:</p>
-                                    <div v-if="recipe.ingredients" v-for="item in recipe.ingredients">
-                                        {{ regulateIngredient(item.pivot.measurements) }} {{ item.pivot.unit }} {{ item.name }}
+                                <div> <!-- Holds country, amount of people, cook time, timer, category, courses, and ingredients, to flex with image -->
+                                    <p class="mt-2">Oprindelsesland: {{ recipe.country }}</p>
+                                    <div class="flex flex-row gap-2 my-3 items-center">
+                                        <IconButton @click="removePerson">
+                                            <template #icon>
+                                                <UserMinus class="h-5 w-5"/>
+                                            </template>
+                                        </IconButton>
+                                        <p>Til {{ recipe.base_amount + addedOrRemoved }} personer</p>
+                                        <IconButton @click="addPerson">
+                                            <template #icon>
+                                                <UserPlus class="h-5 w-5"/>
+                                            </template>
+                                        </IconButton>
                                     </div>
-                                    <div v-if="!recipe.ingredients">Ingen ingredienser tilføjet</div>
+                                    <div class="flex flex-row">
+                                        <Clock class="mr-2"/>
+                                        <p>Arbejdestid {{ recipe.cook_time }} min.</p>
+                                    </div>
+                                    <div class="mt-3">
+                                        <p>Timer:</p>
+                                        <div class="border-2 border-gray-800 w-min p-1 rounded">
+                                            <p v-if="isCounting" class="w-48 my-1 px-2">{{remaining}}</p>
+                                            <Input v-if="!isCounting" v-model="countdownSeconds" type="number" class="w-48 my-2" />
+                                            <div class="flex flex-row gap-2">
+                                                <Button variant="outline" @click="startCountdown"><Play/></Button>
+                                                <Button variant="outline" @click="stop"><Square/></Button>
+                                                <Button variant="outline" @click="pause"><Pause/></Button>
+                                                <Button variant="outline" @click="resume"><StepForward/></Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-3">
+                                        <p class="mb-1">Kategorier:</p>
+                                        <div class="flex flex-row flex-wrap gap-2">
+                                            <div v-for="item in recipe.categories" class="border border-gray-400 py-1 px-2 text-sm text-gray-700 dark:text-gray-300 rounded">
+                                                <div class="">{{item.name}}</div>
+                                            </div>
+    <!--                                    <div class="border border-gray-400 p-1 text-sm text-gray-700 dark:text-gray-300 rounded">-->
+    <!--                                        <Plus class="h-5"/>-->
+    <!--                                    </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <p class="mb-1">Ret:</p>
+                                        <div class="flex flex-row flex-wrap gap-2">
+                                            <div v-for="item in recipe.courses" class="border border-gray-400 py-1 px-2 text-sm text-gray-700 dark:text-gray-300 rounded">
+                                                <div>{{item.name}}</div>
+                                            </div>
+    <!--                                    <div class="border border-gray-400 p-1 text-sm text-gray-700 dark:text-gray-300 rounded">-->
+    <!--                                        <Plus class="h-5"/>-->
+    <!--                                    </div>-->
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <p>Ingredienser:</p>
+                                        <div v-if="recipe.ingredients" v-for="item in recipe.ingredients">
+                                            {{ regulateIngredient(item.pivot.measurements) }} {{ item.pivot.unit }} {{ item.name }}
+                                        </div>
+                                        <div v-if="!recipe.ingredients">Ingen ingredienser tilføjet</div>
+                                    </div>
                                 </div>
-                                <div class="border border-gray-800  md:w-1/3 mb-3 items-center h-80">
+                                <div class="border border-gray-800 mb-3 items-center md:max-w-1/2">
                                     <Image v-if="!recipe.image_name" class="w-full h-full" />
                                     <img v-if="recipe.image_name" :src="`/storage/${recipe.image_name}`" alt="Billede af retten" class="w-full h-full">
                                 </div>
