@@ -3,6 +3,11 @@ Projektet er udstyret med en test bruger og dummy data, som bliver oprettet i da
 ## Skal installeres på forhånd:
 - [Docker](https://www.docker.com/), i form af docker desktop, skal være installeret på computeren
 - [PHP](https://www.php.net/downloads.php?usage=web&os=windows&osvariant=windows-native&version=default) version ^8.0
+  - Disse extensions skal være tilgængelig i php.ini filen
+    - fileinfo
+    - zip
+    - pdo_mysql
+    - pdo_odbc
 - [Composer](https://getcomposer.org/), seneste version
 - [Node.js](https://nodejs.org/en/download), seneste version
 
