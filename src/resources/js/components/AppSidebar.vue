@@ -14,12 +14,11 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-// import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 import { index as dashboard } from "@/routes/recipe"
 import { index as category_index }  from "@/routes/category";
 import { create as recipe_create } from "@/routes/recipe";
-import { inspiration } from "@/routes"
+import { inspiration, allRecipes } from "@/routes"
 import Notification from "@/components/Notification.vue";
 
 const mainNavItems: NavItem[] = [
@@ -40,7 +39,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Se alle opskrifter',
-        href: '',
+        href: allRecipes(),
         icon: LayoutGrid,
     },
     {

@@ -7,7 +7,6 @@ import RecipeTile from "@/components/RecipeTile.vue";
 import TextLink from "@/components/TextLink.vue";
 import {RadioGroup, RadioGroupLabel, RadioGroupOption} from "@headlessui/vue";
 import {computed, ref, watch} from "vue";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 
 const props = defineProps<{
     recipes: Recipe[]
@@ -29,7 +28,6 @@ const Options = [
 ]
 
 const chosenSort = ref('')
-const chosenCategory = ref('')
 
 watch(chosenSort, async (sortedRecipe) => {
     switch (sortedRecipe.name) {
@@ -45,9 +43,6 @@ watch(chosenSort, async (sortedRecipe) => {
     }
 })
 
-const filteredRecipes = () => {
-    return props.recipes.filter(props.recipes.categories?.id === chosenCategory.value)
-}
 </script>
 
 <template>
@@ -94,25 +89,12 @@ const filteredRecipes = () => {
                                 </div>
                             </RadioGroup>
                         </div>
-                        <div class="mb-2">  <!--TODO: for filtering -->
-                            <Select v-model="chosenCategory">
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Vælg en kategori"/>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem v-for="item in categories" :key="item.id" :value="item.id">
-                                        {{ item.name }}
-                                    </SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
                         <div v-if="recipes" class="grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 ">
                             <RecipeTile :recipes="recipes"/>
                         </div>
                         <div v-if="!recipes">
-                            Du har ikke nogen gemte opskrifter endnu
+                            Der er ikke nogen opskrifter i systemet endnu
                             <TextLink :href="create()" :tabindex="5">Tilføj en her</TextLink>
-<!--                            <TextLink :href="?()" :tabindex="5">Eller find en allerede oprettet opskrift her</TextLink>-->
                         </div>
                     </div>
                 </div>
