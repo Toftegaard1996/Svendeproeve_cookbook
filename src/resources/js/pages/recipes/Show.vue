@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import {index as category_index} from "@/routes/category";
-import {Button} from "@/components/ui/button";
 import {Form, Head, Link} from "@inertiajs/vue3";
-import AppLayout from "@/layouts/AppLayout.vue";
-import {Input} from "@/components/ui/input";
-import {Label} from "@/components/ui/label";
-import type {BreadcrumbItem, Recipe} from "@/types";
-import {destroy, index as dashboard} from '@/routes/recipe';
+import {useCountdown} from "@vueuse/core";
 import {Clock, Image, Printer, UserMinus, UserPlus, Plus, Play, Square, Pause, StepForward} from 'lucide-vue-next';
 import {ref, shallowRef} from "vue";
 import RecipeController from "@/actions/App/Http/Controllers/RecipeController";
 import DeleteModal from "@/components/DeleteModal.vue";
 import IconButton from "@/components/IconButton.vue";
-import {useCountdown} from "@vueuse/core";
 import TimeIsUpModal from "@/components/TimeIsUpModal.vue";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import AppLayout from "@/layouts/AppLayout.vue";
+import {index as category_index} from "@/routes/category";
+import {destroy, index as dashboard} from '@/routes/recipe';
+import type {BreadcrumbItem, Recipe} from "@/types";
 
 const props = defineProps<{
     recipe: Recipe
@@ -23,6 +23,7 @@ let recipeToBeDeleted:Recipe;
 const canEdit = ref(false);
 const openDelete = ref(false);
 const openTimeUp = ref(false);
+const isAwake = ref(false)
 
 function openDeleteModal(item: Recipe) {
     openDelete.value = true;
@@ -30,7 +31,7 @@ function openDeleteModal(item: Recipe) {
 }
 
 const baseAmount = props.recipe.base_amount;
-let addedOrRemoved = ref(0);
+const addedOrRemoved = ref(0);
 
 const addPerson = () => {
     addedOrRemoved.value++;
@@ -42,6 +43,7 @@ const removePerson = () => {
 
 const regulateIngredient = (ingredient) => {
     const onePersonIngredient = ingredient / baseAmount;
+
     return Math.round(ingredient + (onePersonIngredient * addedOrRemoved.value))
 }
 
@@ -60,6 +62,10 @@ const { remaining, start, stop, pause, resume } = useCountdown(countdownSeconds,
 function startCountdown() {
     start(countdownSeconds)
     isCounting.value = true
+}
+
+function changeIsAwake() {
+    isAwake.value = !isAwake.value
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -100,7 +106,18 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     </IconButton>
                                 </a>
                             </div>
-                            <div class="flex flex-col-reverse md:flex-row justify-between mt-6">
+                            <div class="mt-4">
+                                <p>Hold skærmen vågen mens du arbejder? </p>
+                                <div class="flex flex-row items-center gap-2 my-1 py-1">
+                                    <div @change="changeIsAwake()" class="relative inline-block w-11 h-5">
+                                        <input id="switch-component" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-100 dark:bg-slate-800 rounded-full checked:bg-emerald-700 dark:checked:bg-emerald-700 cursor-pointer transition-colors duration-300" />
+                                        <label for="switch-component" class="absolute top-0 left-0 w-5 h-5 bg-white rounded-full border border-slate-300 shadow-sm transition-transform duration-300 peer-checked:translate-x-6 peer-checked:border-slate-800 cursor-pointer">
+                                        </label>
+                                    </div>
+                                    <div v-if="isAwake">Skærmen holdes vågen</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col-reverse md:flex-row justify-between mt-2">
                                 <div> <!-- Holds country, amount of people, cook time, timer, category, courses, and ingredients, to flex with image -->
                                     <p class="mt-2">Oprindelsesland: {{ recipe.country }}</p>
                                     <div class="flex flex-row gap-2 my-3 items-center">

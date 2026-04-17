@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import {RadioGroup, RadioGroupLabel, RadioGroupOption} from "@headlessui/vue";
 import {Head} from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
-import {index as dashboard, create} from '@/routes/recipe';
-import type {BreadcrumbItem, Category, Course, Recipe} from '@/types';
+import {ref, watch} from "vue";
 import RecipeTile from "@/components/RecipeTile.vue";
 import TextLink from "@/components/TextLink.vue";
-import {RadioGroup, RadioGroupLabel, RadioGroupOption} from "@headlessui/vue";
-import {computed, ref, watch} from "vue";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import AppLayout from '@/layouts/AppLayout.vue';
+import { allRecipes } from '@/routes';
+import {index as dashboard, create} from '@/routes/recipe';
+import type {BreadcrumbItem, Category, Course, Recipe} from '@/types';
 
 const props = defineProps<{
     recipes: Recipe[]
@@ -106,13 +107,13 @@ const filteredRecipes = () => {
                                 </SelectContent>
                             </Select>
                         </div>
-                        <div v-if="recipes" class="grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 ">
+                        <div v-if="recipes.length > 0" class="grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 ">
                             <RecipeTile :recipes="recipes"/>
                         </div>
-                        <div v-if="!recipes">
-                            Du har ikke nogen gemte opskrifter endnu
-                            <TextLink :href="create()" :tabindex="5">Tilføj en her</TextLink>
-<!--                            <TextLink :href="?()" :tabindex="5">Eller find en allerede oprettet opskrift her</TextLink>-->
+                        <div v-if="recipes.length == 0" class="mt-6 flex flex-col">
+                            <p>Du har ikke nogen gemte opskrifter endnu</p>
+                            <TextLink :href="create()" :tabindex="5">Tilføj en manuelt her</TextLink>
+                            <TextLink :href="allRecipes()" :tabindex="5">Eller find en allerede oprettet opskrift her</TextLink>
                         </div>
                     </div>
                 </div>
